@@ -1,8 +1,8 @@
 import '@/styles/global.css'
 import { GlobalProvider } from "../context/global"
 export const metadata = {
-  title: 'RunKing App',
-  description: 'This is a RunKing App Page.',
+  title: 'Câmera de Chamada',
+  description: 'Seu acesso VIP',
 }
 
 export default function RootLayout({ children }) {
