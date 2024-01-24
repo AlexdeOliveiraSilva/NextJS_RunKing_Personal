@@ -103,8 +103,8 @@ export default function Login() {
           :
           <button
 
-            onClick={() => signOut()}
-            className="btnRed profileBtn">{isLoading == true ? <Loading></Loading> : "Deslogar"}</button>
+            onClick={() => handleCapture()}
+            className="btnGreen profileBtn">{isLoading == true ? <Loading></Loading> : "Reenviar Foto"}</button>
         }
       </div>
       <Footer></Footer>

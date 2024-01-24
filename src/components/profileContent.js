@@ -8,14 +8,16 @@ export default function ProfileContent({ status, name, number, auth }) {
 
         <div className="profileContent">
             <div style={{ width: "100%", display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
-                <div className={status === 1 ? "iconGreenOut" : "iconRedOut"}>
+
+                <p style={{ margin: "0 30px 0 10px" }}>Olá {name}, você está convidado a acessar a nossa área VIP. Por favor, confirme seus dados e tire uma foto para que possamos liberar o seu acesso.</p>
+                {/* <div className={status === 1 ? "iconGreenOut" : "iconRedOut"}>
                     <div className={status === 1 ? "iconGreenin" : "iconRedin"}></div>
                 </div>
                 <p style={{ margin: "0 30px 0 10px" }}>{status === 1 ? "Online" : "Offline"}</p>
                 <div className={auth === 1 ? "iconGreenOut" : "iconRedOut"}>
                     <div className={auth === 1 ? "iconGreenin" : "iconRedin"}></div>
                 </div>
-                <p style={{ marginLeft: "10px" }}>{auth === 1 ? "Autênticado" : "Não Autênticado"}</p>
+                <p style={{ marginLeft: "10px" }}>{auth === 1 ? "Autênticado" : "Não Autênticado"}</p> */}
             </div>
             <Separator color={status === 1 ? "var(--green-dark)" : "var(--red-primary)"} width={"90%"} height={"1px"}></Separator>
             {status === 1 ?
