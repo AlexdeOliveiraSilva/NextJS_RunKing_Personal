@@ -9,7 +9,7 @@ export default function ProfileContent({ status, name, number, auth }) {
         <div className="profileContent">
             <div style={{ width: "100%", display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
 
-                <p style={{ margin: "0 30px 0 10px" }}>Olá {name}, você está convidado a acessar a nossa área VIP. Por favor, confirme seus dados e tire uma foto para que possamos liberar o seu acesso.</p>
+                <p style={{ margin: "0 30px 0 10px" }}>Olá {name}, você está convidado a fazer seu credenciamento por reconhecimento facial. Por favor, confirme seus dados e tire uma foto para que possamos validar seu acesso.</p>
                 {/* <div className={status === 1 ? "iconGreenOut" : "iconRedOut"}>
                     <div className={status === 1 ? "iconGreenin" : "iconRedin"}></div>
                 </div>
