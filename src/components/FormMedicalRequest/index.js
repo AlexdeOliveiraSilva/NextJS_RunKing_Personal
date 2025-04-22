@@ -51,7 +51,7 @@ export default function FormMedicalRequest({
         implantedDevices: userData.implantedDevices || "",
         takesMedication: userData.takesMedication || "",
         medicationList: userData.medicationList || "",
-        hasHelthInsurance: userData.healthInsuranceProvider ? "SIM" : "NAO",
+        hasHelthInsurance: userData.healthInsuranceProvider || "",
         healthInsuranceProvider: userData.healthInsuranceProvider || "",
         medicalConsent: userData.medicalConsent === 1,
         medicalConditionOtherDescription:
@@ -60,6 +60,8 @@ export default function FormMedicalRequest({
       });
     }
   }, [userData]);
+
+  console.log("userData", userData);
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -82,13 +84,12 @@ export default function FormMedicalRequest({
         emergencyContact: `${emergencyContactName} - ${emergencyContactPhone}`,
         medicalConsent: formData.medicalConsent ? 1 : 0,
       };
-
-      const url = `${urlAPI}athletes/${eventId}`;
+      console.log("body", body);
+      const url = `${urlAPI}accessAthletes/${eventId}/${userUUID}`;
       const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          uuid: userUUID,
         },
         body: JSON.stringify(body),
       });
