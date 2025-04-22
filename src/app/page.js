@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -8,13 +8,18 @@ import TakePicture from "@/components/takePicture";
 import ModalTakePic from "@/components/modalTakePic";
 import Loading from "@/components/loading";
 
-import { useState, useEffect } from "react"
-import { useRouter, useParams, usePathname, useSearchParams } from "next/navigation";
-
+import { useState, useEffect } from "react";
+import {
+  useRouter,
+  useParams,
+  usePathname,
+  useSearchParams,
+} from "next/navigation";
+import FormMedicalRequest from "@/components/FormMedicalRequest";
 
 export default function Login() {
   const searchParams = useSearchParams();
-  const [image, setImage] = useState("")
+  const [image, setImage] = useState("");
   const [capturedImage, setCapturedImage] = useState(null);
   const [modalCapture, setModalCapture] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,8 +27,11 @@ export default function Login() {
   const [connectionError, setConnectionError] = useState(false);
   const [userError, setUserError] = useState(false);
 
+
   const USER_UUID = searchParams.get("uuid");
-  const URL_API = "https://api.runking.com.br/"
+  const URL_API = "https://app.runking.com.br/";
+
+  const eventId = userData?.events?.id;
 
   const getUserData = async () => {
     setConnectionError(false);
@@ -34,7 +42,6 @@ export default function Login() {
 
       if (response.ok) {
         const data = await response.json();
-
         setUserData(data);
         localStorage.setItem("user_name", data?.name);
         localStorage.setItem("user_number", data?.number);
@@ -51,37 +58,40 @@ export default function Login() {
   };
 
   const handleCapture = (imageSrc) => {
-    setModalCapture(true)
+    setModalCapture(true);
     setCapturedImage(imageSrc);
   };
-
 
   const signOut = () => {
     setIsLoading(true);
     setTimeout(() => {
-      localStorage.clear("user_image")
-      setImage("")
+      localStorage.clear("user_image");
+      setImage("");
       setIsLoading(false);
-    }, 1000)
+    }, 1000);
   };
 
   const closeAndSave = () => {
     setTimeout(() => {
-      setImage(localStorage.getItem("user_image"))
-      setModalCapture(false)
+      setImage(localStorage.getItem("user_image"));
+      setModalCapture(false);
       setIsLoading(false);
-    }, 1000)
+    }, 1000);
   };
 
   useEffect(() => {
-    setImage(localStorage.getItem("user_image"))
+    setImage(localStorage.getItem("user_image"));
     getUserData();
-  }, [])
-
+  }, []);
 
   return (
     <main className="fullContainer">
-      {modalCapture == true && <ModalTakePic close={() => closeAndSave()} uuid={USER_UUID}></ModalTakePic>}
+      {modalCapture == true && (
+        <ModalTakePic
+          close={() => closeAndSave()}
+          uuid={USER_UUID}
+        ></ModalTakePic>
+      )}
       <Header title="Login"></Header>
       <div className="homeContent">
         <div className="userContent">
@@ -93,21 +103,32 @@ export default function Login() {
           ></ProfileContent>
           <TakePicture
             status={!!image ? true : false}
-            img={image}></TakePicture>
+            img={image}
+          ></TakePicture>
         </div>
-        {!image ?
+        {!image ? (
           <button
-
             onClick={() => handleCapture()}
-            className="btnGreen profileBtn">{isLoading == true ? <Loading></Loading> : "Tirar Foto"}</button>
-          :
+            className="btnGreen profileBtn"
+          >
+            {isLoading == true ? <Loading></Loading> : "Tirar Foto"}
+          </button>
+        ) : (
           <button
-
             onClick={() => handleCapture()}
-            className="btnGreen profileBtn">{isLoading == true ? <Loading></Loading> : "Reenviar Foto"}</button>
-        }
+            className="btnGreen profileBtn"
+          >
+            {isLoading == true ? <Loading></Loading> : "Reenviar Foto"}
+          </button>
+        )}
+        <FormMedicalRequest
+          userData={userData}
+          userUUID={USER_UUID}
+          urlAPI={URL_API}
+          eventId={eventId}
+        />
       </div>
       <Footer></Footer>
-    </main >
-  )
+    </main>
+  );
 }

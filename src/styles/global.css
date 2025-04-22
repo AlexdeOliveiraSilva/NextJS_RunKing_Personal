@@ -7,30 +7,37 @@
   font-family: "poppins300";
   src: url("/fonts/poppins/Poppins-Regular.ttf") format("truetype");
 }
+
 @font-face {
-  font-family: "poppins";
+  font-family: "poppins400";
   src: url("/fonts/poppins/Poppins-Medium.ttf") format("truetype");
 }
+
 @font-face {
   font-family: "poppins";
   src: url("/fonts/poppins/Poppins-SemiBold.ttf") format("truetype");
 }
+
 @font-face {
   font-family: "poppins";
   src: url("/fonts/poppins/Poppins-Thin.ttf") format("truetype");
 }
+
 @font-face {
   font-family: "poppins600";
   src: url("/fonts/poppins/Poppins-Bold.ttf") format("truetype");
 }
+
 @font-face {
   font-family: "poppins";
   src: url("/fonts/poppins/Poppins-Black.ttf") format("truetype");
 }
+
 @font-face {
   font-family: "poppins700";
   src: url("/fonts/poppins/Poppins-ExtraBold.ttf") format("truetype");
 }
+
 @font-face {
   font-family: "poppins";
   src: url("/fonts/poppins/Poppins-Light.ttf") format("truetype");
@@ -39,14 +46,12 @@
 /* ****************** DM SANS */
 @font-face {
   font-family: "dm1";
-  src: url("/fonts/dm-sans/DMSans-Italic-VariableFont_opsz,wght.ttf")
-    format("truetype");
+  src: url("/fonts/dm-sans/DMSans-Italic-VariableFont_opsz,wght.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "dm";
-  src: url("/fonts/dm-sans/DMSans-VariableFont_opsz,wght.ttf")
-    format("truetype");
+  src: url("/fonts/dm-sans/DMSans-VariableFont_opsz,wght.ttf") format("truetype");
 }
 
 /* ****************** COLORS */
@@ -166,6 +171,7 @@ body p {
   font-size: 16px;
   line-height: 1.5;
 }
+
 .errorInput {
   font-family: "poppins300";
   font-weight: 300;
@@ -189,6 +195,7 @@ body p {
   position: absolute;
   z-index: 98;
 }
+
 .fullContainer {
   width: 100%;
   max-width: 100%;
@@ -200,6 +207,7 @@ body p {
   align-items: center;
   overflow-x: hidden;
 }
+
 .mainContainer {
   width: 100%;
   min-height: 74vh;
@@ -212,13 +220,312 @@ body p {
 }
 
 .greyBackground {
+  position: relative;
   width: 100%;
   background-color: var(--grey-primary);
   color: var(--white-primary);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.boxTextSmall {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  bottom: 0px;
+  right: 10px;
+}
+
+/* ****************** FORM CONFIG */
+
+.medicalContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 50px;
+  width: 100%;
+  height: 100%;
+  padding: 50px 100px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 50px;
+  width: 100%;
+  height: 100%;
+}
+
+.userInfoImg {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+}
+
+
+.userInfoImg img {
+  height: 300px !important;
+  object-fit: cover;
+}
+
+.userInfoText {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  height: 100%;
+}
+
+.boxUserInfoText,
+.boxUserInfoText2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+}
+
+
+.boxUserInfoText p,
+.boxUserInfoText2 .subBoxUserInfoText p {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400 !important;
+  font-size: 14px;
+  color: #9EA2AA;
+}
+
+.boxUserInfoText h2,
+.boxUserInfoText2 .subBoxUserInfoText h2 {
+  font-family: 'poppins600';
+  font-style: normal;
+  font-size: 32px;
+  color: #000000;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+  height: 100%;
+  padding: 50px 0;
+  border-top: 2px solid #9EA2AA;
+}
+
+.form .inputTextForm {
+  width: 100%;
+  height: 50px;
+  padding: 10px 20px;
+  border: 2px solid #E7E7E7;
+  border-radius: 10px;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000;
+}
+
+.form .inputTextForm::placeholder {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: #5E5E5E;
+}
+
+.boxForm1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.boxForm,
+.boxFormBloodType {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  column-gap: 50px;
+  width: 100%;
+  height: 100%;
+}
+
+.boxFormGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-content: start;
+  row-gap: 10px;
+  column-gap: 50px;
+  width: 100%;
+  height: 100%;
+}
+
+.form label {
+  font-family: 'Poppins700';
+  font-style: normal;
+  font-size: 20px;
+  color: #222831;
+}
+
+.form .boxForm1 .inputTextForm {
+  width: 100%;
+  height: 50px;
+  padding: 10px 20px;
+  border: 2px solid #E7E7E7;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000;
+}
+
+.form .boxForm1 .inputTextForm::placeholder {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: #5E5E5E;
+}
+
+.form .boxForm .inputTextForm {
+  width: 100%;
+  height: 50px;
+  padding: 10px 20px;
+  border: 2px solid #E7E7E7;
+  border-radius: 10px;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000;
+}
+
+.form .boxForm .inputTextForm::placeholder {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: #5E5E5E;
+}
+
+.form input {
+  width: 20px;
+  height: 20px;
+}
+
+.inputTextArea {
+  width: 100%;
+  padding: 10px 20px;
+  border: 2px solid #E7E7E7;
+  border-radius: 10px;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000;
+}
+
+.inputTextArea::placeholder {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: #5E5E5E;
+}
+
+.boxForm label,
+.boxFormGrid label,
+.boxFormBloodType label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Poppins600';
+  font-style: normal;
+  font-size: 18px;
+  color: #5E5E5E;
+}
+
+.boxConsent {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 5px;
+  width: 100%;
+  height: 100%;
+}
+
+.consentText {
+  font-family: 'Poppins400';
+  font-style: normal;
+  font-weight: 400 !important;
+  font-size: 16px;
+  color: #222831;
+}
+
+.consentText2 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  gap: 5px;
+  font-family: 'Poppins400' !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 18px !important;
+  color: #5E5E5E !important;
+}
+
+.consentText2 input {
+  margin-top: 6px;
+}
+
+.form input[type='checkbox'],
+.form input[type='radio'] {
+  cursor: pointer;
+}
+
+.form button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 40px;
+  border-radius: 20px;
+  font-family: 'Poppins400';
+  font-style: normal;
+  font-weight: 400 !important;
+  font-size: 18px;
+  color: #222831;
+  background: #32E0C4;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background: #32e0c3bb;
+  transform: scale(1.05);
+  transition: all 0.5s ease;
 }
 
 /* ****************** INPUTS CONFIG */
@@ -236,7 +543,9 @@ body p {
   align-items: center;
   gap: 7px;
 }
-.inputText:focus {
+
+.inputText:focus,
+.inputTextForm:focus {
   border: var(--green-primary) 1px solid !important;
 }
 
@@ -272,6 +581,7 @@ textarea:focus {
   cursor: pointer;
   transition: all 0.5 ease;
 }
+
 .btnBlue {
   font-weight: bold;
   font-size: 16px;
@@ -290,6 +600,7 @@ textarea:focus {
   cursor: pointer;
   transition: all 0.5 ease;
 }
+
 .btnBlack {
   font-weight: bold;
   font-size: 16px;
@@ -308,6 +619,7 @@ textarea:focus {
   cursor: pointer;
   transition: all 0.5 ease;
 }
+
 .btnRed {
   font-weight: bold;
   font-size: 16px;
@@ -326,6 +638,7 @@ textarea:focus {
   cursor: pointer;
   transition: all 0.5 ease;
 }
+
 .btnDisabled {
   font-weight: bold;
   font-size: 13px;
@@ -344,22 +657,27 @@ textarea:focus {
   cursor: pointer;
   transition: all 0.5 ease;
 }
+
 .btnGreen img {
   width: 20px;
   height: 20px;
 }
+
 .btnBlue img {
   width: 20px;
   height: 20px;
 }
+
 .btnBlack img {
   width: 20px;
   height: 20px;
 }
+
 .btnRed img {
   width: 20px;
   height: 20px;
 }
+
 .btnDisabled img {
   width: 20px;
   height: 20px;
@@ -385,21 +703,93 @@ textarea:focus {
   }
 }
 
+@media (max-width: 768px) {
+  .greyBackground {
+    flex-direction: column;
+    gap: 10px;
+    height: auto !important;
+    padding: 10px 0;
+  }
+
+  .boxTextSmall {
+    position: static;
+  }
+
+  /* ****************** FORM CONFIG */
+
+  .medicalContainer {
+    padding: 50px 10px;
+  }
+
+  .userInfoImg {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .boxUserInfoText2 {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .boxUserInfoText h2,
+  .boxUserInfoText2 .subBoxUserInfoText h2 {
+    font-size: 28px;
+  }
+
+  .boxFormBloodType {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 20px;
+  }
+
+  .boxFormGrid {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 0 20px;
+  }
+
+  .consentText {
+    font-size: 14px;
+  }
+
+  .consentText2 {
+    font-size: 16px !important;
+  }
+
+  .consentText2 input {
+    width: 50px;
+    margin-top: 4px;
+  }
+
+  .boxFormButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+  }
+
+}
+
 @media (min-width: 930px) {
   .btnGreen:hover {
     background-color: var(--green-opacity);
     transform: scale(1.1);
     color: var(--black-neutral-dark);
   }
+
   .btnBlue:hover {
     background-color: var(--blue-opacity);
     transform: scale(1.1);
     color: var(--black-neutral-dark);
   }
+
   .btnBlack:hover {
     background-color: var(--grey-neutral-two);
     transform: scale(1.1);
   }
+
   .btnRed:hover {
     background-color: var(--red-opacity);
     transform: scale(1.1);
@@ -411,15 +801,19 @@ textarea:focus {
   .btnGreen {
     padding: 5px 15px !important;
   }
+
   .btnBlue {
     padding: 5px 15px !important;
   }
+
   .btnBlack {
     padding: 5px 15px !important;
   }
+
   .btnRed {
     padding: 5px 15px !important;
   }
+
   .btnDisabled {
     padding: 5px 15px !important;
   }
@@ -428,15 +822,27 @@ textarea:focus {
 /* ****************** HEADER */
 
 .headerContent {
-  width: 100%;
+  width: 75%;
+  height: 70px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   flex-wrap: nowrap;
   color: var(--grey-neutral-seven);
-  font-size: 15px;
-  margin: 7px 0;
+  margin-top: 10px;
+  border-top: 2px solid #32E0C4;
+}
+
+.headerTitle {
+  text-align: center;
+  font-family: 'poppins700';
+  font-style: normal;
+  font-size: 25px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+
+
 }
 
 .iconGreenOut {
@@ -475,20 +881,13 @@ textarea:focus {
   background-color: var(--red-primary);
 }
 
-.headerContent span {
-  color: var(--white-primary);
-  font-weight: bold;
-  margin-right: 20px;
-  font-size: 14px;
-  letter-spacing: 1px;
-}
-
 .headerContentRespOne {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
+
 .headerContentRespTwo {
   display: flex;
   flex-direction: row;
@@ -507,10 +906,12 @@ textarea:focus {
     max-width: 100%;
     font-size: 13px;
   }
+
   .headerContent span {
     margin-right: 5px 0;
     font-size: 14px;
   }
+
   .iconGreenin {
     margin: 0 3px;
   }
@@ -590,6 +991,7 @@ textarea:focus {
 .takePictureContent p {
   font-size: 16px;
 }
+
 .picture {
   width: 250px;
   height: 250px;
@@ -606,9 +1008,11 @@ textarea:focus {
   .userContent {
     width: 90vw;
   }
+
   .profileContent {
     width: 90vw;
   }
+
   .profileBtn {
     width: 90vw;
   }
@@ -618,9 +1022,11 @@ textarea:focus {
   .userContent {
     flex-direction: column-reverse;
   }
+
   .profileContent {
     height: auto;
   }
+
   .picture img {
     width: 250px;
     height: 250px;
@@ -642,11 +1048,13 @@ textarea:focus {
   z-index: 99;
   border: 1px solid var(--red-primary);
 }
+
 .circleMark {
   width: 35vh;
   height: 50vh;
   border: 1px solid var(--red-primary);
 }
+
 .cameraDiv {
   display: flex;
   flex-direction: column;
@@ -656,6 +1064,7 @@ textarea:focus {
   height: 100vh;
   background-color: var(--black-neutral-dark);
 }
+
 .cameraDiv h5 {
   width: 100%;
   color: var(--white-primary);

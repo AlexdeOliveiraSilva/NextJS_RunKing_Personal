@@ -15,6 +15,8 @@
     "next": "13.4.19",
     "react": "^18",
     "react-dom": "^18",
+    "react-hot-toast": "^2.5.2",
+    "react-input-mask": "^2.0.4",
     "react-webcam": "^7.2.0"
   },
   "devDependencies": {

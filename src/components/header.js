@@ -1,25 +1,23 @@
-'use client'
+"use client";
 import { useRouter, usePathname } from "next/navigation";
-import { useState, useEffect, useContext } from "react"
-import { GlobalContext } from "@/context/global"
-
+import { useState, useEffect, useContext } from "react";
+import { GlobalContext } from "@/context/global";
 
 export default function Header() {
-    const { config } = useContext(GlobalContext)
+  const { config } = useContext(GlobalContext);
 
-    const path = usePathname();
-    const router = useRouter();
+  const path = usePathname();
+  const router = useRouter();
 
-
-    return (
-        <div className="greyBackground" style={{ flexDirection: "column", padding: "10px 0", height: "17vh" }}>
-            <img src="/images/logo-runking.png"></img>
-            <div className="headerContent">
-                <div className="headerContent">
-
-
-                </div>
-            </div>
-        </div>
-    )
+  return (
+    <div
+      className="greyBackground"
+      style={{ flexDirection: "column", padding: "10px 0", height: "auto" }}
+    >
+      <img width={150} src="/images/logo-runking.png"></img>
+      <div className="headerContent">
+        <span className="headerTitle">credenciamento e dados médicos do atleta</span>
+      </div>
+    </div>
+  );
 }
