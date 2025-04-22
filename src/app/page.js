@@ -27,7 +27,6 @@ export default function Login() {
   const [connectionError, setConnectionError] = useState(false);
   const [userError, setUserError] = useState(false);
 
-
   const USER_UUID = searchParams.get("uuid");
   const URL_API = "https://api.runking.com.br/";
 
@@ -86,15 +85,15 @@ export default function Login() {
 
   return (
     <main className="fullContainer">
-      {modalCapture == true && (
+      {/* {modalCapture == true && (
         <ModalTakePic
           close={() => closeAndSave()}
           uuid={USER_UUID}
         ></ModalTakePic>
-      )}
+      )} */}
       <Header title="Login"></Header>
       <div className="homeContent">
-        <div className="userContent">
+        {/* <div className="userContent">
           <ProfileContent
             status={!!connectionError ? 3 : !!userError ? 2 : 1}
             name={!!userData?.name ? userData?.name : "-"}
@@ -120,13 +119,19 @@ export default function Login() {
           >
             {isLoading == true ? <Loading></Loading> : "Reenviar Foto"}
           </button>
+        )} */}
+        {!userData ? (
+          <Loading />
+        ) : (
+          <FormMedicalRequest
+            userData={userData}
+            userUUID={USER_UUID}
+            urlAPI={URL_API}
+            eventId={eventId}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+          />
         )}
-        <FormMedicalRequest
-          userData={userData}
-          userUUID={USER_UUID}
-          urlAPI={URL_API}
-          eventId={eventId}
-        />
       </div>
       <Footer></Footer>
     </main>

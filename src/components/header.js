@@ -16,7 +16,7 @@ export default function Header() {
     >
       <img width={150} src="/images/logo-runking.png"></img>
       <div className="headerContent">
-        <span className="headerTitle">credenciamento e dados médicos do atleta</span>
+        <span className="headerTitle">dados médicos do atleta</span>
       </div>
     </div>
   );
