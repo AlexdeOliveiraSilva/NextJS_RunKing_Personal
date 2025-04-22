@@ -28,8 +28,8 @@ export default function FormMedicalRequest({
     medicationList: "",
     hasHelthInsurance: "",
     healthInsuranceProvider: "",
-    personalRecord: "",
     medicalConsent: false,
+    // personalRecord: "",
   });
 
   useEffect(() => {
@@ -52,8 +52,8 @@ export default function FormMedicalRequest({
         medicationList: userData.medicationList || "",
         hasHelthInsurance: userData.healthInsuranceProvider ? "SIM" : "NAO",
         healthInsuranceProvider: userData.healthInsuranceProvider || "",
-        personalRecord: userData.personalRecord || "",
         medicalConsent: userData.medicalConsent === 1,
+        // personalRecord: userData.personalRecord || "",
       });
     }
   }, [userData]);
@@ -136,7 +136,7 @@ export default function FormMedicalRequest({
               </div>
             </div>
             <form onSubmit={handleSubmit} className="form">
-              <div className="boxForm1">
+              {/* <div className="boxForm1">
                 <label>Recorde Pessoal</label>
                 <InputMask
                   mask="99:99:99"
@@ -146,7 +146,7 @@ export default function FormMedicalRequest({
                   onChange={handleChange}
                   placeholder="00:00:00"
                 />
-              </div>
+              </div> */}
               <div className="boxForm1">
                 <label>Contato de Emergência</label>
                 <input
