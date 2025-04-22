@@ -29,7 +29,7 @@ export default function Login() {
 
 
   const USER_UUID = searchParams.get("uuid");
-  const URL_API = "https://app.runking.com.br/";
+  const URL_API = "https://api.runking.com.br/";
 
   const eventId = userData?.events?.id;
 
