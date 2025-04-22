@@ -201,13 +201,12 @@ body p {
   gap: 50px;
   width: 100%;
   height: 100%;
-  padding: 50px 100px;
+  padding: 0px 100px;
 }
 
 .userInfo {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
   gap: 50px;
   width: 100%;
@@ -218,13 +217,13 @@ body p {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  width: 100%;
+  width: auto;
   height: 100%;
 }
 
 
 .userInfoImg img {
-  height: 300px !important;
+  height: 200px !important;
   object-fit: cover;
 }
 
@@ -674,13 +673,22 @@ textarea:focus {
   /* ****************** FORM CONFIG */
 
   .medicalContainer {
-    padding: 50px 10px;
+    padding: 0px 10px;
+  }
+
+  .userInfo {
+    flex-direction: column-reverse;     
   }
 
   .userInfoImg {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    width: 100%;
+  }
+
+  .userInfoImg img {
+    height: auto !important;
   }
 
   .boxUserInfoText2 {

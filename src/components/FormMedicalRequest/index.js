@@ -29,6 +29,7 @@ export default function FormMedicalRequest({
     hasHelthInsurance: "",
     healthInsuranceProvider: "",
     medicalConsent: false,
+    medicalConditionOtherDescription: "",
     // personalRecord: "",
   });
 
@@ -53,6 +54,8 @@ export default function FormMedicalRequest({
         hasHelthInsurance: userData.healthInsuranceProvider ? "SIM" : "NAO",
         healthInsuranceProvider: userData.healthInsuranceProvider || "",
         medicalConsent: userData.medicalConsent === 1,
+        medicalConditionOtherDescription:
+          userData.medicalConditionOtherDescription || "",
         // personalRecord: userData.personalRecord || "",
       });
     }
@@ -111,13 +114,6 @@ export default function FormMedicalRequest({
         <>
           <div className="medicalContainer">
             <div className="userInfo">
-              <div className="userInfoImg">
-                <img
-                  src={userData?.photo1Rekognition || "/images/User.png"}
-                  alt="User"
-                />
-                <img src={userData?.events.logo} alt="Logo Evento" />
-              </div>
               <div className="userInfoText">
                 <div className="boxUserInfoText">
                   <p>Atleta</p>
@@ -133,6 +129,13 @@ export default function FormMedicalRequest({
                     <h2>{userData?.modality}</h2>
                   </div>
                 </div>
+              </div>
+              <div className="userInfoImg">
+                {/* <img
+                  src={userData?.photo1Rekognition || "/images/User.png"}
+                  alt="User"
+                /> */}
+                <img src={userData?.events.logo} alt="Logo Evento" />
               </div>
             </div>
             <form onSubmit={handleSubmit} className="form">
@@ -280,6 +283,16 @@ export default function FormMedicalRequest({
                     </label>
                   ))}
                 </div>
+              )}
+              {formData.medicalConditions === "OUTRAS" && (
+                <input
+                  className="inputTextForm"
+                  type="text"
+                  name="medicalConditionOtherDescription"
+                  value={formData.medicalConditionOtherDescription || ""}
+                  onChange={handleChange}
+                  placeholder="Por favor, especifique"
+                />
               )}
 
               <label>Você possui algum dispositivo médico implantável ?</label>
