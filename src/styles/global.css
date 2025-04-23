@@ -211,6 +211,8 @@ body p {
   gap: 50px;
   width: 100%;
   height: 100%;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #9EA2AA;
 }
 
 .userInfoImg {
@@ -273,8 +275,8 @@ body p {
   gap: 20px;
   width: 100%;
   height: 100%;
-  padding: 50px 0;
-  border-top: 2px solid #9EA2AA;
+  padding-bottom: 50px;
+
 }
 
 .form .inputTextForm {
@@ -483,6 +485,24 @@ body p {
   transition: all 0.5s ease;
 }
 
+.formAlreadySentMessage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.formAlreadySentMessage h2 {
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  color: #222831;
+}
+
 /* ****************** INPUTS CONFIG */
 
 .inputText {
@@ -673,11 +693,12 @@ textarea:focus {
   /* ****************** FORM CONFIG */
 
   .medicalContainer {
+    gap: 30px;
     padding: 0px 10px;
   }
 
   .userInfo {
-    flex-direction: column-reverse;     
+    flex-direction: column-reverse;
   }
 
   .userInfoImg {
@@ -732,6 +753,14 @@ textarea:focus {
     width: 100%;
     height: 100%;
     padding: 10px;
+  }
+
+  .formAlreadySentMessage {
+    padding-bottom: 30px;
+  }
+
+  .formAlreadySentMessage h2 {
+    font-size: 20px;
   }
 
 }
