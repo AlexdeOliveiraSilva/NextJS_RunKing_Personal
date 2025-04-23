@@ -38,20 +38,27 @@ export default function FormMedicalRequest({
       const [emergencyContactName = "", emergencyContactPhone = ""] =
         userData.emergencyContact?.split(" - ") || [];
 
+      const formatEnum = (value) => {
+        if (!value) return "";
+        return value.replace(/_/g, " ");
+      };
+
+      const formatBloodType = (value) =>
+        value?.replace("_POS", "+").replace("_NEG", "-") || "";
+
       setFormData({
         emergencyContactName,
         emergencyContactPhone,
-        bloodType:
-          userData.bloodType?.replace("_POS", "+").replace("_NEG", "-") || "",
+        bloodType: formatBloodType(userData.bloodType),
         hasAllergy: userData.hasAllergy || "",
         allergyDescription: userData.allergyDescription || "",
         hasMedicalCondition: userData.hasMedicalCondition || "",
-        medicalConditions: userData.medicalConditions || "",
+        medicalConditions: formatEnum(userData.medicalConditions),
         hasImplantedDevice: userData.hasImplantedDevice || "",
-        implantedDevices: userData.implantedDevices || "",
+        implantedDevices: formatEnum(userData.implantedDevices),
         takesMedication: userData.takesMedication || "",
         medicationList: userData.medicationList || "",
-        hasHelthInsurance: userData.healthInsuranceProvider || "",
+        hasHelthInsurance: userData.healthInsuranceProvider ? "SIM" : "NAO",
         healthInsuranceProvider: userData.healthInsuranceProvider || "",
         medicalConsent: userData.medicalConsent === 1,
         medicalConditionOtherDescription:
@@ -61,7 +68,6 @@ export default function FormMedicalRequest({
     }
   }, [userData]);
 
-  console.log("userData", userData);
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -84,7 +90,6 @@ export default function FormMedicalRequest({
         emergencyContact: `${emergencyContactName} - ${emergencyContactPhone}`,
         medicalConsent: formData.medicalConsent ? 1 : 0,
       };
-      console.log("body", body);
       const url = `${urlAPI}accessAthletes/${eventId}/${userUUID}`;
       const response = await fetch(url, {
         method: "POST",
@@ -97,7 +102,11 @@ export default function FormMedicalRequest({
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Erro ao enviar os dados");
+        if (!response.ok) {
+          throw new Error(
+            data.error || data.message || "Erro ao enviar os dados"
+          );
+        }
       }
 
       toast.success("Dados enviados com sucesso!");
