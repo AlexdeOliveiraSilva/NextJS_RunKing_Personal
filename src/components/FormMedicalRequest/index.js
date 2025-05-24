@@ -1,9 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import InputMask from "react-input-mask";
 import { useRouter } from "next/navigation";
 import Loading from "../loading";
+import { GlobalContext } from "@/context/global";
 
 export default function FormMedicalRequest({
   urlAPI,
@@ -32,6 +33,8 @@ export default function FormMedicalRequest({
     medicalConditionOtherDescription: "",
     // personalRecord: "",
   });
+
+  const { t } = useContext(GlobalContext);
 
   useEffect(() => {
     if (userData?.medicalConsent === 1) {
@@ -80,14 +83,14 @@ export default function FormMedicalRequest({
         }
       }
 
-      toast.success("Dados enviados com sucesso!");
+      toastsuccess("Dados enviados com sucesso!");
       setIsLoading(false);
       setTimeout(() => {
         setFormAlreadySubmitted(true);
       }, 1000);
     } catch (err) {
       console.error(err.message);
-      toast.error("Erro ao enviar os dados. Tente novamente.");
+      toasterror("Erro ao enviar os dados. Tente novamente.");
       setIsLoading(false);
     }
   };
@@ -100,16 +103,16 @@ export default function FormMedicalRequest({
             <div className="userInfo">
               <div className="userInfoText">
                 <div className="boxUserInfoText">
-                  <p>Atleta</p>
+                  <p>{t("athlete")}</p>
                   <h2>{userData?.name}</h2>
                 </div>
                 <div className="boxUserInfoText2">
                   <div className="subBoxUserInfoText">
-                    <p>Número de Peito</p>
+                    <p>{t("bibNumber")}</p>
                     <h2>{userData?.number}</h2>
                   </div>
                   <div className="subBoxUserInfoText">
-                    <p>Modalidade</p>
+                    <p>{t("modality")}</p>
                     <h2>{userData?.modality}</h2>
                   </div>
                 </div>
@@ -125,8 +128,8 @@ export default function FormMedicalRequest({
             {formAlreadySubmitted ? (
               <div className="formAlreadySentMessage">
                 <h2>
-                  Formulário já Enviado!
-                  <br /> Boa Prova!
+                  {t("formAlreadySent")}
+                  <br /> {t("goodLuck")}
                 </h2>
               </div>
             ) : (
@@ -143,14 +146,14 @@ export default function FormMedicalRequest({
                 />
               </div> */}
                 <div className="boxForm1">
-                  <label>Contato de Emergência</label>
+                  <label>{t('emergencyContact')}</label>
                   <input
                     className="inputTextForm"
                     type="text"
                     name="emergencyContactName"
                     value={formData.emergencyContactName}
                     onChange={handleChange}
-                    placeholder="Nome"
+                    placeholder={t("name")}
                   />
                   <InputMask
                     mask="(99) 99999-9999"
@@ -158,10 +161,10 @@ export default function FormMedicalRequest({
                     name="emergencyContactPhone"
                     value={formData.emergencyContactPhone}
                     onChange={handleChange}
-                    placeholder="Telefone"
+                    placeholder={t("phone")}
                   />
                 </div>
-                <label>Tipo Sanguíneo</label>
+                <label>{t("bloodType")}</label>
                 <div className="boxFormBloodType">
                   {[
                     "O+",
@@ -172,7 +175,7 @@ export default function FormMedicalRequest({
                     "B-",
                     "AB+",
                     "AB-",
-                    "DESCONHECIDO",
+                    `${t("unknown")}`,
                   ].map((type) => (
                     <label key={type}>
                       <input
@@ -186,7 +189,7 @@ export default function FormMedicalRequest({
                     </label>
                   ))}
                 </div>
-                <label>Possui Alergia?</label>
+                <label>{t("hasAllergy")}</label>
                 <div className="boxForm">
                   <label>
                     <input
@@ -196,7 +199,7 @@ export default function FormMedicalRequest({
                       checked={formData.hasAllergy === "SIM"}
                       onChange={handleChange}
                     />
-                    Sim
+                    {t("yes")}
                   </label>
                   <label>
                     <input
@@ -206,7 +209,7 @@ export default function FormMedicalRequest({
                       checked={formData.hasAllergy === "NAO"}
                       onChange={handleChange}
                     />
-                    Não
+                    {t("no")}
                   </label>
                 </div>
                 {formData.hasAllergy === "SIM" && (
@@ -216,14 +219,11 @@ export default function FormMedicalRequest({
                     name="allergyDescription"
                     value={formData.allergyDescription}
                     onChange={handleChange}
-                    placeholder="Por favor, especifique"
+                    placeholder={t("pleaseSpecify")}
                   />
                 )}
 
-                <label>
-                  Você possui alguma doença ou condição médica pré-existente,
-                  mesmo que controlada?
-                </label>
+                <label>{t("hasCondition")}</label>
                 <div className="boxForm">
                   <label>
                     <input
@@ -233,7 +233,7 @@ export default function FormMedicalRequest({
                       checked={formData.hasMedicalCondition === "SIM"}
                       onChange={handleChange}
                     />
-                    Sim
+                    {t("yes")}
                   </label>
                   <label>
                     <input
@@ -243,25 +243,25 @@ export default function FormMedicalRequest({
                       checked={formData.hasMedicalCondition === "NAO"}
                       onChange={handleChange}
                     />
-                    Não
+                    {t("no")}
                   </label>
                 </div>
                 {formData.hasMedicalCondition === "SIM" && (
                   <div className="boxFormGrid">
                     {[
-                      "HIPERTENSAO",
-                      "DIABETES TIPO 1",
-                      "DIABETES TIPO 2",
-                      "COLESTEROL ALTO",
-                      "DOENCA CORONARIANA",
-                      "GOTA",
-                      "HIPERTIREOIDISMO",
-                      "HIPOTIROIDISMO",
-                      "ARRITMIA CARDIACA",
-                      "LUPUS",
-                      "ASMA",
-                      "DOENCA RENAL CRONICA",
-                      "OUTRAS",
+                      `${t("hiperTension")}`,
+                      `${t("TypeOneDiabetes")}`,
+                      `${t("TypeTwoDiabetes")}`,
+                      `${t("highCholesterol")}`,
+                      `${t("coronaryDisease")}`,
+                      `${t("drop")}`,
+                      `${t("hyperthyroidism")}`,
+                      `${t("hypothyroidism")}`,
+                      `${t("cardiacArrhythmia")}`,
+                      `${t("lupus")}`,
+                      `${t("asthma")}`,
+                      `${t("chronicKidneyDisease")}`,
+                      `${t("other")}`,
                     ].map((cond) => (
                       <label key={cond}>
                         <input
@@ -283,13 +283,11 @@ export default function FormMedicalRequest({
                     name="medicalConditionOtherDescription"
                     value={formData.medicalConditionOtherDescription || ""}
                     onChange={handleChange}
-                    placeholder="Por favor, especifique"
+                    placeholder={t("pleaseSpecify")}
                   />
                 )}
 
-                <label>
-                  Você possui algum dispositivo médico implantável ?
-                </label>
+                <label>{t("hasDevice")}</label>
                 <div className="boxForm">
                   <label>
                     <input
@@ -299,7 +297,7 @@ export default function FormMedicalRequest({
                       checked={formData.hasImplantedDevice === "SIM"}
                       onChange={handleChange}
                     />
-                    Sim
+                    {t("yes")}
                   </label>
                   <label>
                     <input
@@ -309,17 +307,17 @@ export default function FormMedicalRequest({
                       checked={formData.hasImplantedDevice === "NAO"}
                       onChange={handleChange}
                     />
-                    Não
+                    {t("no")}
                   </label>
                 </div>
                 {formData.hasImplantedDevice === "SIM" && (
                   <div className="boxFormGrid">
                     {[
-                      "MARCAPASSO",
-                      "CDI",
-                      "BOMBA DE INSULINA",
-                      "STENT CARDIACO",
-                      "STENT CEREBRAL",
+                      `${t("pacemaker")}`,
+                      `CDI`,
+                      `${t("insulinPump")}`,
+                      `${t("heartStent")}`,
+                      `${t("brainStent")}`,
                     ].map((device) => (
                       <label key={device}>
                         <input
@@ -335,7 +333,7 @@ export default function FormMedicalRequest({
                   </div>
                 )}
 
-                <label>Você faz uso de medicamentos diariamente?</label>
+                <label>{t("takesMedication")}</label>
                 <div className="boxForm">
                   <label>
                     <input
@@ -345,7 +343,7 @@ export default function FormMedicalRequest({
                       checked={formData.takesMedication === "SIM"}
                       onChange={handleChange}
                     />
-                    Sim
+                    {t("yes")}
                   </label>
                   <label>
                     <input
@@ -355,7 +353,7 @@ export default function FormMedicalRequest({
                       checked={formData.takesMedication === "NAO"}
                       onChange={handleChange}
                     />
-                    Não
+                    {t("no")}
                   </label>
                 </div>
                 {formData.takesMedication === "SIM" && (
@@ -365,11 +363,11 @@ export default function FormMedicalRequest({
                     name="medicationList"
                     value={formData.medicationList}
                     onChange={handleChange}
-                    placeholder="Por favor, especifique"
+                    placeholder={t("pleaseSpecify")}
                   />
                 )}
 
-                <label>Possui Plano de Saúde?</label>
+                <label>{t("hasInsurance")}</label>
                 <div className="boxForm">
                   <label>
                     <input
@@ -379,7 +377,7 @@ export default function FormMedicalRequest({
                       checked={formData.hasHelthInsurance === "SIM"}
                       onChange={handleChange}
                     />
-                    Sim
+                    {t("yes")}
                   </label>
                   <label>
                     <input
@@ -389,7 +387,7 @@ export default function FormMedicalRequest({
                       checked={formData.hasHelthInsurance === "NAO"}
                       onChange={handleChange}
                     />
-                    Não
+                    {t("no")}
                   </label>
                 </div>
                 {formData.hasHelthInsurance === "SIM" && (
@@ -399,20 +397,11 @@ export default function FormMedicalRequest({
                     name="healthInsuranceProvider"
                     value={formData.healthInsuranceProvider}
                     onChange={handleChange}
-                    placeholder="Se sim, indique qual"
+                    placeholder={t("whichInsurance")}
                   />
                 )}
                 <div className="boxConsent">
-                  <span className="consentText">
-                    Ao preencher este formulário, autorizo o uso dos meus dados
-                    pessoais, incluindo informações de saúde, exclusivamente
-                    para fins médicos e de segurança durante o evento.Esses
-                    dados serão tratados com sigilo, conforme a Lei Geral de
-                    Proteção de Dados (Lei nº 13.709/2018), e não serão
-                    compartilhados com terceiros sem meu consentimento.Os dados
-                    serão armazenados de forma segura e utilizados apenas
-                    enquanto forem necessários para o evento.
-                  </span>
+                  <span className="consentText">{t("consentNotice")}</span>
                   <label className="consentText2">
                     <input
                       type="checkbox"
@@ -421,12 +410,11 @@ export default function FormMedicalRequest({
                       onChange={(e) =>
                         setFormData((prev) => ({
                           ...prev,
-                          medicalConsent: e.target.checked,
+                          medicalConsent: e.targetchecked,
                         }))
                       }
                     />
-                    Li e concordo com os termos acima e autorizo o uso dos meus
-                    dados pessoais para fins médicos durante o evento.
+                    {t("agreeTerms")}
                   </label>
                 </div>
                 <div className="boxFormButton">
@@ -442,7 +430,7 @@ export default function FormMedicalRequest({
                         : "not-allowed",
                     }}
                   >
-                    Enviar
+                    {t("submit")}
                   </button>
                 </div>
               </form>

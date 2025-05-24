@@ -1,24 +1,36 @@
-'use client'
+'use client';
 import React, { createContext, useEffect, useState } from 'react';
 
 export const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
-    const URLLOCALSERVICE = "http://localhost:8000/"
+  const URLLOCALSERVICE = "http://localhost:8000/";
 
-    const [config, setConfig] = useState({
-        IS_SEND_TO_CLOUD: false,
-        dateTimeSystem: null,
-        serialNumber: null,
-        status: "Parado",
-        ip: "",
-        totalReader: 0,
-        totalCloud: 0,
-    });
+  const [config, setConfig] = useState({
+    IS_SEND_TO_CLOUD: false,
+    dateTimeSystem: null,
+    serialNumber: null,
+    status: "Parado",
+    ip: "",
+    totalReader: 0,
+    totalCloud: 0,
+  });
 
-    const [isReading, setisReading] = useState(false)
+  const [isReading, setisReading] = useState(false);
 
-    // async function getConfig() {
+  // 👇 Adicionado para tradução
+  const [language, setLanguage] = useState("pt");
+  const [translations, setTranslations] = useState({});
+
+  useEffect(() => {
+    fetch(`/locales/${language}/common.json`)
+      .then((res) => res.json())
+      .then(setTranslations);
+  }, [language]);
+
+  const t = (key) => translations[key] || key;
+
+   // async function getConfig() {
     //     try {
     //         const response = await fetch(`${URLLOCALSERVICE}getRealTimeData`, {
     //             method: 'GET'
@@ -50,14 +62,17 @@ export const GlobalProvider = ({ children }) => {
     //     getConfig()
     // }, [])
 
-    return (
-        <GlobalContext.Provider value={{
-            config,
-            URLLOCALSERVICE,
-            isReading,
-            setisReading
-        }}>
-            {children}
-        </GlobalContext.Provider>
-    );
+  return (
+    <GlobalContext.Provider value={{
+      config,
+      URLLOCALSERVICE,
+      isReading,
+      setisReading,
+      language,
+      setLanguage,
+      t
+    }}>
+      {children}
+    </GlobalContext.Provider>
+  );
 };
