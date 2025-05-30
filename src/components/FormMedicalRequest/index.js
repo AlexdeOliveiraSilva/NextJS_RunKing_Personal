@@ -410,7 +410,7 @@ export default function FormMedicalRequest({
                       onChange={(e) =>
                         setFormData((prev) => ({
                           ...prev,
-                          medicalConsent: e.targetchecked,
+                          medicalConsent: e.target.checked,
                         }))
                       }
                     />
