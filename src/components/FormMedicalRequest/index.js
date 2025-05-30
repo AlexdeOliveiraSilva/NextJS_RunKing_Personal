@@ -83,14 +83,14 @@ export default function FormMedicalRequest({
         }
       }
 
-      toastsuccess("Dados enviados com sucesso!");
+      toast.success("Dados enviados com sucesso!");
       setIsLoading(false);
       setTimeout(() => {
         setFormAlreadySubmitted(true);
       }, 1000);
     } catch (err) {
       console.error(err.message);
-      toasterror("Erro ao enviar os dados. Tente novamente.");
+      toast.error("Erro ao enviar os dados. Tente novamente.");
       setIsLoading(false);
     }
   };
