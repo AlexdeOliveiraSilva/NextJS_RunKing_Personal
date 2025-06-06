@@ -14,6 +14,7 @@ export default function FormMedicalRequest({
   isLoading,
   setIsLoading,
 }) {
+  const router = useRouter();
   const [formAlreadySubmitted, setFormAlreadySubmitted] = useState(false);
   const [formData, setFormData] = useState({
     emergencyContactName: "",
@@ -86,7 +87,7 @@ export default function FormMedicalRequest({
       toast.success("Dados enviados com sucesso!");
       setIsLoading(false);
       setTimeout(() => {
-        setFormAlreadySubmitted(true);
+        window.location.reload();
       }, 1000);
     } catch (err) {
       console.error(err.message);
@@ -146,7 +147,7 @@ export default function FormMedicalRequest({
                 />
               </div> */}
                 <div className="boxForm1">
-                  <label>{t('emergencyContact')}</label>
+                  <label>{t("emergencyContact")}</label>
                   <input
                     className="inputTextForm"
                     type="text"
