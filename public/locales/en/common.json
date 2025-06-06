@@ -38,5 +38,26 @@
   "pacemaker": "PACEMAKER",
   "insulinPump": "INSULIN PUMP",
   "heartStent": "HEART STENT",
-  "brainStent": "BRAIN STENT"
+  "brainStent": "BRAIN STENT",
+  "birthDate": "Birth Date",
+  "event": "Event",
+  "advance": "Advance",
+  "action": "Action",
+  "eventId": "Event ID",
+  "select": "Select",
+  "selectTitle": "Select an Existing Registration",
+  "faq.question1": "Why should I fill out this medical form?",
+  "faq.answer1": "The medical form is essential to ensure your safety during the race. In case of emergency, the information provided will be used by the official medical team for faster and more efficient care.",
+
+  "faq.question2": "How will my data be used?",
+  "faq.answer2": "Your data will be used exclusively by the event's medical team, in compliance with the General Data Protection Law (LGPD). The information is securely stored and will not be shared with third parties.",
+
+  "faq.question3": "Haven’t received the email with the form link?",
+  "faq.answer3": "Check your spam/junk folder. If you still can't find it, enter your CPF/ID and date of birth above to access your medical form.",
+
+  "faq.question4": "There was an error filling out my form. What should I do?",
+  "faq.answer4": "Try refreshing the page. If you see 'Form successfully submitted', it means your data has already been sent. If the form reopens with empty fields, fill it out again and submit.",
+
+  "faq.question5": "Why is it important to download and create an account in the Go RunKing app?",
+  "faq.answer5": "With a Go RunKing account, you will have access to:\n• Pre-filled medical data for future events.\n• Emergency medical assistance requests during the race, for yourself or others.\n• Event check-in with your personalized QR code to speed up kit pick-up.\n• Share your GPS location so family and friends can track your progress, and track other athletes in real time.\n• Access your official results, including history and progress charts."
 }

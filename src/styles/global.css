@@ -204,6 +204,17 @@ body p {
   padding: 0px 100px;
 }
 
+.medicalContainerLogin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  width: 100%;
+  height: 100%;
+  padding: 0px 100px;
+}
+
 .userInfo {
   display: flex;
   justify-content: space-between;
@@ -279,7 +290,19 @@ body p {
 
 }
 
-.form .inputTextForm {
+.formLogin {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  width: 40%;
+  height: 100%;
+  padding-bottom: 50px;
+}
+
+.form .inputTextForm,
+.formLogin .inputTextForm {
   width: 100%;
   height: 50px;
   padding: 10px 20px;
@@ -292,13 +315,15 @@ body p {
   color: #000000;
 }
 
-.form .inputTextForm::placeholder {
+.form .inputTextForm::placeholder,
+.formLogin .inputTextForm::placeholder {
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   color: #5E5E5E;
 }
+
 
 .boxForm1 {
   display: flex;
@@ -485,6 +510,38 @@ body p {
   transition: all 0.5s ease;
 }
 
+.formLogin button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 40px;
+  margin-top: 30px;
+  border-radius: 20px;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400 !important;
+  font-size: 18px;
+  color: #222831;
+  background: #32E0C4;
+  cursor: pointer;
+}
+
+.formLogin button:hover {
+  background: #32e0c3bb;
+  transform: scale(1.05);
+  transition: all 0.5s ease;
+}
+
+.boxFormButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
 .formAlreadySentMessage {
   display: flex;
   justify-content: center;
@@ -501,6 +558,36 @@ body p {
   font-weight: bold;
   font-size: 28px;
   color: #222831;
+}
+
+.faqSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 50px;
+}
+
+.medicalContainerTable {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+}
+
+.tableAhtletes {
+  font-family: 'Poppins';
+  font-weight: 600;
+  color: var(--grey-primary);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.medicalContainerTable h2 {
+  font-family: 'Poppins';
 }
 
 /* ****************** INPUTS CONFIG */
@@ -658,6 +745,34 @@ textarea:focus {
   height: 20px;
 }
 
+.tdBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnTable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 35px;
+  border-radius: 5px;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400 !important;
+  font-size: 16px;
+  color: #222831;
+  background: #32E0C4;
+  cursor: pointer;
+}
+
+.btnTable:hover {
+  background: #32e0c3bb;
+  transform: scale(1.05);
+  transition: all 0.5s ease;
+}
+
 .loading-animation {
   position: relative;
   top: 0;
@@ -679,9 +794,9 @@ textarea:focus {
 }
 
 .headerSelect {
-  position : absolute;
-  top: 10px; 
-  right:10px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 @media (max-width: 768px) {
@@ -698,9 +813,35 @@ textarea:focus {
 
   /* ****************** FORM CONFIG */
 
-  .medicalContainer {
+  .medicalContainer,
+  .medicalContainerLogin{
     gap: 30px;
     padding: 0px 10px;
+  }
+
+  .medicalContainerTable {
+    min-width: 100%;
+    overflow-x: auto;
+  }
+
+  .tableAhtletes td {
+    width: 100%;
+  }
+
+  .tableAhtletes th {
+    width: 100%;
+  }
+
+  .formLogin {
+    width: 100%;
+  }
+
+  .faqSection {
+    margin-top: 0;
+  }
+
+  .faqSection h3 {
+    text-align: center;
   }
 
   .userInfo {

@@ -1,36 +1,35 @@
 "use client";
-
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import ProfileContent from "@/components/profileContent";
-import Separator from "@/components/separator";
-import TakePicture from "@/components/takePicture";
-import ModalTakePic from "@/components/modalTakePic";
 import Loading from "@/components/loading";
-
-import { useState, useEffect } from "react";
-import {
-  useRouter,
-  useParams,
-  usePathname,
-  useSearchParams,
-} from "next/navigation";
 import FormMedicalRequest from "@/components/FormMedicalRequest";
+import FormLogin from "@/components/FormLogin";
+import ListAthletes from "@/components/ListAthletes";
 
 export default function Login() {
   const searchParams = useSearchParams();
+  const encodedCpf = searchParams.get("cpf");
+  const decodedCpf = encodedCpf ? atob(encodedCpf) : "";
+  const router = useRouter();
+
   const [image, setImage] = useState("");
-  const [capturedImage, setCapturedImage] = useState(null);
-  const [modalCapture, setModalCapture] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState();
+  const [eventData, setEventData] = useState();
+  const [athletes, setAthletes] = useState([]);
   const [connectionError, setConnectionError] = useState(false);
   const [userError, setUserError] = useState(false);
+  const [cpf, setCpf] = useState(decodedCpf);
+  const [birthDate, setBirthDate] = useState("");
 
   const USER_UUID = searchParams.get("uuid");
+  const EVENT_SLUG = searchParams.get("event");
   const URL_API = "https://api.runking.com.br/";
-
   const eventId = userData?.events?.id;
+
+  const shouldShowFormMedicalRequest = USER_UUID || athletes.length === 1;
 
   const getUserData = async () => {
     setConnectionError(false);
@@ -78,10 +77,90 @@ export default function Login() {
     }, 1000);
   };
 
+  const getEventData = async () => {
+    if (!EVENT_SLUG) return;
+
+    try {
+      const response = await fetch(
+        `${URL_API}eventBySlug/${EVENT_SLUG}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setEventData(data);
+      } else {
+        handleErrors(response);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar evento:", error);
+      setUserError(true);
+    }
+  };
+
+  const handleAthleteSearch = async (forcedCpf) => {
+    const targetCpf = forcedCpf || cpf;
+    if (!targetCpf) return;
+
+    const eventId = eventData?.event?.id;
+
+    const cleanCpf = targetCpf.replace(/\D/g, "");
+    setConnectionError(false);
+    setUserError(false);
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(
+        `${URL_API}resgistersAthlete/${eventId}/${cleanCpf}`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setAthletes(data);
+
+        const encodedCpf = btoa(cleanCpf);
+        if (data.length > 1) {
+          router.push(`?event=${EVENT_SLUG}&cpf=${encodedCpf}`);
+        } else if (data.length === 1) {
+          router.push(`?uuid=${data[0].uuid}`);
+        }
+      } else {
+        handleErrors(response);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar atletas:", error);
+      setUserError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleErrors = (response) => {
+    if (response.status >= 500) {
+      setConnectionError(true);
+    } else {
+      setUserError(true);
+    }
+  };
+
   useEffect(() => {
-    setImage(localStorage.getItem("user_image"));
-    getUserData();
-  }, []);
+    const fetchData = async () => {
+      setIsLoading(true);
+      setImage(localStorage.getItem("user_image"));
+
+      await getEventData();
+
+      if (shouldShowFormMedicalRequest) {
+        await getUserData();
+      }
+
+      if (decodedCpf) {
+        await handleAthleteSearch(decodedCpf);
+      }
+
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, [USER_UUID, athletes.length]);
 
   return (
     <main className="fullContainer">
@@ -91,7 +170,7 @@ export default function Login() {
           uuid={USER_UUID}
         ></ModalTakePic>
       )} */}
-      <Header title="Login"></Header>
+      <Header title="Login" />
       <div className="homeContent">
         {/* <div className="userContent">
           <ProfileContent
@@ -120,20 +199,35 @@ export default function Login() {
             {isLoading == true ? <Loading></Loading> : "Reenviar Foto"}
           </button>
         )} */}
-        {!userData ? (
+        {isLoading ? (
           <Loading />
-        ) : (
+        ) : shouldShowFormMedicalRequest ? (
           <FormMedicalRequest
             userData={userData}
-            userUUID={USER_UUID}
+            userUUID={USER_UUID || athletes[0]?.uuid}
             urlAPI={URL_API}
             eventId={eventId}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
           />
+        ) : athletes.length > 1 ? (
+          <ListAthletes athletes={athletes} />
+        ) : (
+          <FormLogin
+            eventData={eventData}
+            eventSlug={EVENT_SLUG}
+            urlAPI={URL_API}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+            cpf={cpf}
+            setCpf={setCpf}
+            birthDate={birthDate}
+            setBirthDate={setBirthDate}
+            onSubmit={handleAthleteSearch}
+          />
         )}
       </div>
-      <Footer></Footer>
+      <Footer />
     </main>
   );
 }

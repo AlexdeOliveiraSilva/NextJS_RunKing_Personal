@@ -38,5 +38,26 @@
   "pacemaker": "MARCAPASOS",
   "insulinPump": "BOMBA DE INSULINA",
   "heartStent": "STENT CARDÍACO",
-  "brainStent": "STENT CEREBRAL"
+  "brainStent": "STENT CEREBRAL",
+  "birthDate": "Fecha de nacimiento",
+  "event": "Evento",
+  "advance": "Avance",
+  "action": "Acción",
+  "eventId": "ID de Evento",
+  "select": "Seleccionar",
+  "selectTitle": "Seleccione un Registro Existente",
+  "faq.question1": "¿Por qué debo completar este formulario médico?",
+  "faq.answer1": "El formulario médico es fundamental para garantizar tu seguridad durante la carrera. En caso de emergencia, la información proporcionada será utilizada por el equipo médico oficial del evento para una atención más rápida y eficiente.",
+
+  "faq.question2": "¿Cómo se utilizarán mis datos?",
+  "faq.answer2": "Tus datos serán utilizados exclusivamente por el equipo médico del evento, en conformidad con la Ley General de Protección de Datos (LGPD). La información se almacena de forma segura y no será compartida con terceros.",
+
+  "faq.question3": "¿Aún no recibiste el correo con el enlace del formulario?",
+  "faq.answer3": "Revisa tu carpeta de spam/correo no deseado. Si aún no lo encuentras, ingresa tu CPF/Documento y fecha de nacimiento arriba para completar tu ficha médica.",
+
+  "faq.question4": "¿Hubo un error al completar el formulario? ¿Qué debo hacer?",
+  "faq.answer4": "Intenta actualizar la página. Si aparece “Formulario enviado con éxito”, significa que tus datos ya fueron enviados. Si el formulario se abre nuevamente con campos vacíos, completa la información y envíala otra vez.",
+
+  "faq.question5": "¿Por qué es importante descargar y crear una cuenta en la app Go RunKing?",
+  "faq.answer5": "Con una cuenta en Go RunKing, tendrás acceso a:\n• Datos médicos previamente completados para eventos futuros.\n• Solicitar asistencia médica de emergencia durante la carrera, para ti o para otros.\n• Realizar check-in en eventos con tu código QR personalizado, agilizando la entrega de kits.\n• Compartir tu ubicación vía GPS para que familia y amigos sigan tu progreso, además de rastrear a otros atletas en tiempo real.\n• Consultar tus resultados oficiales, con historial y gráficos de evolución."
 }

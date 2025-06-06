@@ -24,7 +24,7 @@
   "submit": "Enviar",
   "unknown": "DESCONHECIDO",
   "hiperTension": "HIPERTENSAO",
-  "TypeOneDiabetes": "DIABETES TIPO 1", 
+  "TypeOneDiabetes": "DIABETES TIPO 1",
   "TypeTwoDiabetes": "DIABETES TIPO 2",
   "highCholesterol": "COLESTEROL ALTO",
   "coronaryDisease": "DOENÇA CORONARIANA",
@@ -38,9 +38,26 @@
   "pacemaker": "MARCAPASSO",
   "insulinPump": "BOMBA DE INSULINA",
   "heartStent": "STENT CARDÍACO",
-  "brainStent": "STENT CEREBRAL"
+  "brainStent": "STENT CEREBRAL",
+  "birthDate": "Data de Nascimento",
+  "event": "Evento",
+  "advance": "Avançar",
+  "action": "Ação",
+  "eventId": "ID do Evento",
+  "select": "Selecionar",
+  "selectTitle": "Selecione um Cadastro Existente",
+  "faq.question1": "Por que devo preencher este formulário médico?",
+  "faq.answer1": "O formulário médico é fundamental para garantir sua segurança durante a prova. Em caso de emergência, os dados fornecidos serão usados pela equipe médica oficial do evento para um atendimento mais rápido e eficiente.",
 
+  "faq.question2": "Como meus dados serão utilizados?",
+  "faq.answer2": "Seus dados serão utilizados exclusivamente pela equipe médica do evento, em conformidade com a Lei Geral de Proteção de Dados (LGPD). As informações são armazenadas com segurança e não serão compartilhadas com terceiros.",
 
+  "faq.question3": "Ainda não recebeu o e-mail com o link do formulário?",
+  "faq.answer3": "Verifique sua caixa de spam/lixo eletrônico. Se ainda não encontrar, insira seu CPF/Documento e data de nascimento acima, e preencha sua ficha médica.",
 
+  "faq.question4": "Deu erro no preenchimento do meu formulário. O que fazer?",
+  "faq.answer4": "Tente atualizar a página. Se exibir “Formulário enviado com sucesso” significa que seus dados já foram enviados. Caso reabra com os campos abertos para preenchimento, insira novamente as informações e envie.",
+
+  "faq.question5": "Por que é importante baixar e criar uma conta no app Go RunKing?",
+  "faq.answer5": "Com uma conta no Go RunKing, você terá acesso a:\n• Dados médicos previamente preenchidos em eventos futuros.\n• Solicitação de atendimento médico emergencial durante a prova, para você ou para terceiros.\n• Fazer check-in nos eventos gerando seu QR-Code personalizado, agilizando seu atendimento na entrega dos kits.\n• Enviar sua localização via GPS para família e amigos acompanharem sua evolução, além de rastrear a localização de atletas em tempo real.\n• Consultar seus resultados oficiais, com histórico e gráficos de evolução."
 }
-

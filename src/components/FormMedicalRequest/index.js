@@ -64,7 +64,7 @@ export default function FormMedicalRequest({
         emergencyContact: `${emergencyContactName} - ${emergencyContactPhone}`,
         medicalConsent: formData.medicalConsent ? 1 : 0,
       };
-      const url = `${urlAPI}accessAthletes/${eventId}/${userUUID}`;
+      const url = `${urlAPI}accessAthletesSQS/${eventId}/${userUUID}`;
       const response = await fetch(url, {
         method: "POST",
         headers: {
