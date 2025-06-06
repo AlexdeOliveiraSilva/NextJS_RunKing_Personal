@@ -13,6 +13,8 @@ const FormLogin = ({
   setCpf,
   birthDate,
   setBirthDate,
+  passport,
+  setPassport,
   onSubmit,
 }) => {
   const { t } = useContext(GlobalContext);
@@ -70,6 +72,19 @@ const FormLogin = ({
             placeholder="999.999.999-99"
           />
         </div>
+        <label className="or">{t("or")}</label>
+        <div className="boxForm1">
+          <label>{t("passport")}</label>
+          <input
+            type="text"
+            className="inputTextForm"
+            name="passport"
+            value={passport}
+            onChange={(e) => setPassport(e.target.value)}
+            placeholder="Número do passaporte"
+          />
+        </div>
+
         <div className="boxForm1">
           <label>{t("birthDate")}</label>
           <InputMask

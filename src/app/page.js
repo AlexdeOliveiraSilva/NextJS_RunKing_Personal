@@ -7,11 +7,16 @@ import Loading from "@/components/loading";
 import FormMedicalRequest from "@/components/FormMedicalRequest";
 import FormLogin from "@/components/FormLogin";
 import ListAthletes from "@/components/ListAthletes";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const searchParams = useSearchParams();
   const encodedCpf = searchParams.get("cpf");
+  const encodedPassport = searchParams.get("passport");
+
   const decodedCpf = encodedCpf ? atob(encodedCpf) : "";
+  const decodedPassport = encodedPassport ? atob(encodedPassport) : "";
+
   const router = useRouter();
 
   const [image, setImage] = useState("");
@@ -23,6 +28,7 @@ export default function Login() {
   const [userError, setUserError] = useState(false);
   const [cpf, setCpf] = useState(decodedCpf);
   const [birthDate, setBirthDate] = useState("");
+  const [passport, setPassport] = useState(decodedPassport);
 
   const USER_UUID = searchParams.get("uuid");
   const EVENT_SLUG = searchParams.get("event");
@@ -81,9 +87,7 @@ export default function Login() {
     if (!EVENT_SLUG) return;
 
     try {
-      const response = await fetch(
-        `${URL_API}eventBySlug/${EVENT_SLUG}`
-      );
+      const response = await fetch(`${URL_API}eventBySlug/${EVENT_SLUG}`);
       if (response.ok) {
         const data = await response.json();
         setEventData(data);
@@ -97,29 +101,48 @@ export default function Login() {
   };
 
   const handleAthleteSearch = async (forcedCpf) => {
-    const targetCpf = forcedCpf || cpf;
-    if (!targetCpf) return;
+    const cleanCpf = (forcedCpf || cpf)?.replace(/\D/g, "");
+    const cleanPassport = passport?.trim();
 
-    const eventId = eventData?.event?.id;
+    const isUsingCpf = !!cleanCpf;
+    const isUsingPassport = !!cleanPassport;
 
-    const cleanCpf = targetCpf.replace(/\D/g, "");
+    if (!isUsingCpf && !isUsingPassport) {
+      toast.error("Informe o CPF ou Passaporte.");
+      return;
+    }
+
+    if (!birthDate) {
+      toast.error("Data de nascimento inválida ou ausente!");
+      return;
+    }
+
+    const formattedBirthDate = birthDate.replaceAll("/", "-");
+    const [day, month, year] = formattedBirthDate.split("-");
+    const isoDate = `${year}-${month}-${day}`;
+
     setConnectionError(false);
     setUserError(false);
     setIsLoading(true);
 
     try {
+      const identifier = isUsingCpf ? cleanCpf : cleanPassport;
+      const encodedIdentifier = btoa(identifier);
+
       const response = await fetch(
-        `${URL_API}resgistersAthlete/${eventId}/${cleanCpf}`
+        `${URL_API}resgistersAthlete/${EVENT_SLUG}/${identifier}/${isoDate}`
       );
 
       if (response.ok) {
         const data = await response.json();
         setAthletes(data);
 
-        const encodedCpf = btoa(cleanCpf);
         if (data.length > 1) {
-          router.push(`?event=${EVENT_SLUG}&cpf=${encodedCpf}`);
+          toast.success("Dados validados com sucesso!");
+          const param = isUsingCpf ? "cpf" : "passport";
+          router.push(`?event=${EVENT_SLUG}&${param}=${encodedIdentifier}`);
         } else if (data.length === 1) {
+          toast.success("Dados validados com sucesso!");
           router.push(`?uuid=${data[0].uuid}`);
         }
       } else {
@@ -127,6 +150,7 @@ export default function Login() {
       }
     } catch (error) {
       console.error("Erro ao buscar atletas:", error);
+      toast.error("Dados inválidos, tente novamente!");
       setUserError(true);
     } finally {
       setIsLoading(false);
@@ -152,8 +176,8 @@ export default function Login() {
         await getUserData();
       }
 
-      if (decodedCpf) {
-        await handleAthleteSearch(decodedCpf);
+      if (decodedCpf || decodedPassport) {
+        await handleAthleteSearch(decodedCpf || decodedPassport);
       }
 
       setIsLoading(false);
@@ -223,6 +247,8 @@ export default function Login() {
             setCpf={setCpf}
             birthDate={birthDate}
             setBirthDate={setBirthDate}
+            passport={passport}
+            setPassport={setPassport}
             onSubmit={handleAthleteSearch}
           />
         )}

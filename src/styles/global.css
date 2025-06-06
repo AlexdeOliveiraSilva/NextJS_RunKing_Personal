@@ -330,7 +330,7 @@ body p {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 10px;
+  gap: 5px;
   width: 100%;
   height: 100%;
 }
@@ -411,6 +411,14 @@ body p {
 .form input {
   width: 20px;
   height: 20px;
+}
+
+.or {
+  font-family: 'Poppins';
+  font-weight: 700;
+  font-style: normal;
+  font-size: 20px;
+  color: #222831;
 }
 
 .inputTextArea {
@@ -814,7 +822,7 @@ textarea:focus {
   /* ****************** FORM CONFIG */
 
   .medicalContainer,
-  .medicalContainerLogin{
+  .medicalContainerLogin {
     gap: 30px;
     padding: 0px 10px;
   }

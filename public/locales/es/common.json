@@ -45,6 +45,8 @@
   "action": "Acción",
   "eventId": "ID de Evento",
   "select": "Seleccionar",
+  "passport": "pasaporte",
+  "or": "O",
   "selectTitle": "Seleccione un Registro Existente",
   "faq.question1": "¿Por qué debo completar este formulario médico?",
   "faq.answer1": "El formulario médico es fundamental para garantizar tu seguridad durante la carrera. En caso de emergencia, la información proporcionada será utilizada por el equipo médico oficial del evento para una atención más rápida y eficiente.",
