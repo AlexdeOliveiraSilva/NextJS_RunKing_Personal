@@ -127,7 +127,6 @@ export default function Login() {
 
     try {
       const identifier = isUsingCpf ? cleanCpf : cleanPassport;
-      const encodedIdentifier = btoa(identifier);
 
       const response = await fetch(
         `${URL_API}resgistersAthlete/${EVENT_SLUG}/${identifier}/${isoDate}`
@@ -137,6 +136,15 @@ export default function Login() {
         const data = await response.json();
         setAthletes(data);
 
+        if (data.length === 0) {
+          toast.error(
+            "Nenhum atleta encontrado. Verifique os dados informados."
+          );
+          setUserError(true);
+          return;
+        }
+
+        const encodedIdentifier = btoa(identifier);
         if (data.length > 1) {
           toast.success("Dados validados com sucesso!");
           const param = isUsingCpf ? "cpf" : "passport";
@@ -158,9 +166,16 @@ export default function Login() {
   };
 
   const handleErrors = (response) => {
-    if (response.status >= 500) {
+    if (response.status === 404) {
+      toast.error("Atleta não encontrado. Verifique os dados informados.");
+      setUserError(true);
+    } else if (response.status >= 500) {
+      toast.error(
+        "Erro de conexão com o servidor. Tente novamente mais tarde."
+      );
       setConnectionError(true);
     } else {
+      toast.error("Erro inesperado. Verifique os dados e tente novamente.");
       setUserError(true);
     }
   };
