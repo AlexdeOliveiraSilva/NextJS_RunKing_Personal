@@ -34,10 +34,10 @@ const FormLogin = ({
       question: t("faq.question4"),
       answer: t("faq.answer4"),
     },
-    {
-      question: t("faq.question5"),
-      answer: t("faq.answer5"),
-    },
+    // {
+    //   question: t("faq.question5"),
+    //   answer: t("faq.answer5"),
+    // },
   ];
 
   const handleSubmit = (e) => {

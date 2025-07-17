@@ -47,6 +47,8 @@
   "select": "Select",
   "passport": "Passport",
   "or": "Or",
+  "editInformation": "Edit Information",
+  "cancelEdit": "Cancel Edit",
   "selectTitle": "Select an Existing Registration",
   "faq.question1": "Why should I fill out this medical form?",
   "faq.answer1": "The medical form is essential to ensure your safety during the race. In case of emergency, the information provided will be used by the official medical team for faster and more efficient care.",

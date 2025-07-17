@@ -16,6 +16,7 @@ export default function FormMedicalRequest({
 }) {
   const router = useRouter();
   const [formAlreadySubmitted, setFormAlreadySubmitted] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     emergencyContactName: "",
     emergencyContactPhone: "",
@@ -37,9 +38,42 @@ export default function FormMedicalRequest({
 
   const { t } = useContext(GlobalContext);
 
+  const mapBloodTypeEnumToLabel = (value) => {
+    const map = {
+      O_POS: "O+",
+      O_NEG: "O-",
+      A_POS: "A+",
+      A_NEG: "A-",
+      B_POS: "B+",
+      B_NEG: "B-",
+      AB_POS: "AB+",
+      AB_NEG: "AB-",
+      UNKNOWN: t("unknown"),
+    };
+    return map[value] || value;
+  };
+
   useEffect(() => {
     if (userData?.medicalConsent === 1) {
       setFormAlreadySubmitted(true);
+      setFormData({
+        emergencyContactName: userData.emergencyContact?.split(" - ")[0] || "",
+        emergencyContactPhone: userData.emergencyContact?.split(" - ")[1] || "",
+        bloodType: mapBloodTypeEnumToLabel(userData.bloodType),
+        hasAllergy: userData.hasAllergy || "",
+        allergyDescription: userData.allergyDescription || "",
+        hasMedicalCondition: userData.hasMedicalCondition || "",
+        medicalConditions: userData.medicalConditions?.replace(/_/g, " ") || "",
+        hasImplantedDevice: userData.hasImplantedDevice || "",
+        implantedDevices: userData.implantedDevices?.replace(/_/g, " ") || "",
+        takesMedication: userData.takesMedication || "",
+        medicationList: userData.medicationList || "",
+        hasHelthInsurance: userData.hasHelthInsurance || "",
+        healthInsuranceProvider: userData.healthInsuranceProvider || "",
+        medicalConsent: userData.medicalConsent === 1,
+        medicalConditionOtherDescription:
+          userData.medicalConditionOtherDescription || "",
+      });
     }
   }, [userData]);
 
@@ -126,26 +160,21 @@ export default function FormMedicalRequest({
                 <img src={userData?.events.logo} alt="Logo Evento" />
               </div>
             </div>
-            {formAlreadySubmitted ? (
+            {formAlreadySubmitted && !isEditing ? (
               <div className="formAlreadySentMessage">
                 <h2>
                   {t("formAlreadySent")}
                   <br /> {t("goodLuck")}
                 </h2>
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="editButton"
+                >
+                  {t("editInformation")}
+                </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="form">
-                {/* <div className="boxForm1">
-                <label>Recorde Pessoal</label>
-                <InputMask
-                  mask="99:99:99"
-                  className="inputTextForm"
-                  name="personalRecord"
-                  value={formData.personalRecord}
-                  onChange={handleChange}
-                  placeholder="00:00:00"
-                />
-              </div> */}
                 <div className="boxForm1">
                   <label>{t("emergencyContact")}</label>
                   <input
@@ -419,6 +448,17 @@ export default function FormMedicalRequest({
                   </label>
                 </div>
                 <div className="boxFormButton">
+                  <button
+                    type="button"
+                    onClick={() => setIsEditing(false)}
+                    className="cancelEditButton"
+                    style={{
+                      backgroundColor: "#f44336",
+                      color: "#fff",
+                    }}
+                  >
+                    {t("cancelEdit")}
+                  </button>
                   <button
                     type="submit"
                     disabled={!formData.medicalConsent}

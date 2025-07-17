@@ -545,6 +545,7 @@ body p {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 50px;
   width: 100%;
   height: 100%;
   padding: 10px;
@@ -552,6 +553,7 @@ body p {
 
 .formAlreadySentMessage {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -566,6 +568,30 @@ body p {
   font-weight: bold;
   font-size: 28px;
   color: #222831;
+}
+
+.editButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: 40px;
+  margin-top: 30px;
+  padding: 0 20px;
+  border-radius: 20px;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400 !important;
+  font-size: 18px;
+  color: #222831;
+  background: #32E0C4;
+  cursor: pointer;
+}
+
+.editButton:hover {
+  background: #32e0c3bb;
+  transform: scale(1.05);
+  transition: all 0.5s ease;
 }
 
 .faqSection {

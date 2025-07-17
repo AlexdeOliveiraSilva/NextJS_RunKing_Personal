@@ -47,6 +47,8 @@
   "select": "Selecionar",
   "passport": "Passaporte",
   "or": "Ou",
+  "editInformation": "Editar Informações",
+  "cancelEdit": "Cancelar Edição",
   "selectTitle": "Selecione um Cadastro Existente",
   "faq.question1": "Por que devo preencher este formulário médico?",
   "faq.answer1": "O formulário médico é fundamental para garantir sua segurança durante a prova. Em caso de emergência, os dados fornecidos serão usados pela equipe médica oficial do evento para um atendimento mais rápido e eficiente.",
