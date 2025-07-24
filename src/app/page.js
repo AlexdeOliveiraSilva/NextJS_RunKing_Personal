@@ -126,6 +126,12 @@ export default function Login() {
 
       if (response.ok) {
         const data = await response.json();
+
+        if (!Array.isArray(data) || data.length === 0) {
+          toast.error("Atleta não encontrado. Verifique os dados informados.");
+          setUserError(true);
+          return;
+        }
         setAthletes(data);
 
         const encodedCpf = btoa(cleanCpf);
