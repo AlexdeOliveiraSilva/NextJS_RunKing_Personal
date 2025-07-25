@@ -17,6 +17,7 @@ export default function FormMedicalRequest({
   const router = useRouter();
   const [formAlreadySubmitted, setFormAlreadySubmitted] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
   const [formData, setFormData] = useState({
     emergencyContactName: "",
     emergencyContactPhone: "",
@@ -88,6 +89,23 @@ export default function FormMedicalRequest({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const errors = {};
+    if (!formData.emergencyContactName.trim()) {
+      errors.emergencyContactName = true;
+    }
+    if (!formData.emergencyContactPhone.trim()) {
+      errors.emergencyContactPhone = true;
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      toast.error("Preencha todos os campos obrigatórios.");
+      setIsLoading(false);
+      return;
+    }
+
+    setFormErrors({});
+
     setIsLoading(true);
 
     try {
@@ -176,23 +194,40 @@ export default function FormMedicalRequest({
             ) : (
               <form onSubmit={handleSubmit} className="form">
                 <div className="boxForm1">
-                  <label>{t("emergencyContact")}</label>
+                  <label>
+                    {t("emergencyContact")}{" "}
+                    <span style={{ color: "red" }}>*</span>
+                  </label>
                   <input
-                    className="inputTextForm"
+                    className={` ${
+                      formErrors.emergencyContactName
+                        ? "inputError"
+                        : "inputTextForm"
+                    }`}
                     type="text"
                     name="emergencyContactName"
                     value={formData.emergencyContactName}
                     onChange={handleChange}
                     placeholder={t("name")}
                   />
+                  {formErrors.emergencyContactName && (
+                    <span className="errorText">Campo obrigatório</span>
+                  )}
                   <InputMask
                     mask="(99) 99999-9999"
-                    className="inputTextForm"
+                    className={` ${
+                      formErrors.emergencyContactPhone
+                        ? "inputError"
+                        : "inputTextForm"
+                    }`}
                     name="emergencyContactPhone"
                     value={formData.emergencyContactPhone}
                     onChange={handleChange}
                     placeholder={t("phone")}
                   />
+                  {formErrors.emergencyContactPhone && (
+                    <span className="errorText">Campo obrigatório</span>
+                  )}
                 </div>
                 <label>{t("bloodType")}</label>
                 <div className="boxFormBloodType">
