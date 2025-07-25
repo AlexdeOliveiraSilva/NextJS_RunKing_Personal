@@ -483,17 +483,19 @@ export default function FormMedicalRequest({
                   </label>
                 </div>
                 <div className="boxFormButton">
-                  <button
-                    type="button"
-                    onClick={() => setIsEditing(false)}
-                    className="cancelEditButton"
-                    style={{
-                      backgroundColor: "#f44336",
-                      color: "#fff",
-                    }}
-                  >
-                    {t("cancelEdit")}
-                  </button>
+                  {isEditing && (
+                    <button
+                      type="button"
+                      onClick={() => setIsEditing(false)}
+                      className="cancelEditButton"
+                      style={{
+                        backgroundColor: "#f44336",
+                        color: "#fff",
+                      }}
+                    >
+                      {t("cancelEdit")}
+                    </button>
+                  )}
                   <button
                     type="submit"
                     disabled={!formData.medicalConsent}
