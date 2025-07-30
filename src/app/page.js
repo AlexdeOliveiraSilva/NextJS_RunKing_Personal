@@ -34,8 +34,6 @@ export default function Login() {
 
   const shouldShowFormMedicalRequest = USER_UUID || athletes.length === 1;
 
-  console.log(userData);
-
   // const getUserData = async () => {
   //   setConnectionError(false);
   //   setUserError(false);
