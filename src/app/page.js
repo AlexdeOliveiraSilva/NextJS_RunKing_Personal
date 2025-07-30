@@ -8,6 +8,7 @@ import FormMedicalRequest from "@/components/FormMedicalRequest";
 import FormLogin from "@/components/FormLogin";
 import ListAthletes from "@/components/ListAthletes";
 import toast from "react-hot-toast";
+import { setCookie, parseCookies, destroyCookie } from "nookies";
 
 export default function Login() {
   const searchParams = useSearchParams();
@@ -33,29 +34,31 @@ export default function Login() {
 
   const shouldShowFormMedicalRequest = USER_UUID || athletes.length === 1;
 
-  const getUserData = async () => {
-    setConnectionError(false);
-    setUserError(false);
+  console.log(userData);
 
-    try {
-      const response = await fetch(`${URL_API}checkinCallChamber/${USER_UUID}`);
+  // const getUserData = async () => {
+  //   setConnectionError(false);
+  //   setUserError(false);
 
-      if (response.ok) {
-        const data = await response.json();
-        setUserData(data);
-        localStorage.setItem("user_name", data?.name);
-        localStorage.setItem("user_number", data?.number);
-        localStorage.setItem("event_name", data?.number);
-      } else if (response.status >= 500) {
-        setConnectionError(true);
-      } else {
-        setUserError(true);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      setUserError(true);
-    }
-  };
+  //   try {
+  //     const response = await fetch(`${URL_API}checkinCallChamber/${USER_UUID}`);
+
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setUserData(data);
+  //       localStorage.setItem("user_name", data?.name);
+  //       localStorage.setItem("user_number", data?.number);
+  //       localStorage.setItem("event_name", data?.number);
+  //     } else if (response.status >= 500) {
+  //       setConnectionError(true);
+  //     } else {
+  //       setUserError(true);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //     setUserError(true);
+  //   }
+  // };
 
   const handleCapture = (imageSrc) => {
     setModalCapture(true);
@@ -140,7 +143,11 @@ export default function Login() {
           toast.success("Dados validados com successo!");
           router.push(`?event=${EVENT_SLUG}&cpf=${encodedCpf}`);
         } else if (data.length === 1) {
-          toast.success("Dados validados com successo!");
+          toast.success("Dados validados com sucesso!");
+          setCookie(null, "athleteUserData", JSON.stringify(data[0]), {
+            maxAge: 60 * 60 * 24,
+            path: "/",
+          });
           router.push(`?uuid=${data[0].uuid}`);
         }
       } else {
@@ -178,7 +185,10 @@ export default function Login() {
       await getEventData();
 
       if (shouldShowFormMedicalRequest) {
-        await getUserData();
+        const cookies = parseCookies();
+        if (cookies.athlete_user_data) {
+          setUserData(JSON.parse(cookies.athlete_user_data));
+        }
       }
 
       if (decodedCpf) {

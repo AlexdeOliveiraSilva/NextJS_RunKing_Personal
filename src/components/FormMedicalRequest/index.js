@@ -55,25 +55,25 @@ export default function FormMedicalRequest({
   };
 
   useEffect(() => {
-    if (userData?.medicalConsent === 1) {
+    if (userData?.extraData?.medicalConsent === 1) {
       setFormAlreadySubmitted(true);
       setFormData({
-        emergencyContactName: userData.emergencyContact?.split(" - ")[0] || "",
-        emergencyContactPhone: userData.emergencyContact?.split(" - ")[1] || "",
-        bloodType: mapBloodTypeEnumToLabel(userData.bloodType),
-        hasAllergy: userData.hasAllergy || "",
-        allergyDescription: userData.allergyDescription || "",
-        hasMedicalCondition: userData.hasMedicalCondition || "",
-        medicalConditions: userData.medicalConditions?.replace(/_/g, " ") || "",
-        hasImplantedDevice: userData.hasImplantedDevice || "",
-        implantedDevices: userData.implantedDevices?.replace(/_/g, " ") || "",
-        takesMedication: userData.takesMedication || "",
-        medicationList: userData.medicationList || "",
-        hasHelthInsurance: userData.hasHelthInsurance || "",
-        healthInsuranceProvider: userData.healthInsuranceProvider || "",
-        medicalConsent: userData.medicalConsent === 1,
+        emergencyContactName: userData.extraData?.emergencyContact?.split(" - ")[0] || "",
+        emergencyContactPhone: userData.extraData?.emergencyContact?.split(" - ")[1] || "",
+        bloodType: mapBloodTypeEnumToLabel(userData.extraData?.bloodType),
+        hasAllergy: userData.extraData?.hasAllergy || "",
+        allergyDescription: userData.extraData?.allergyDescription || "",
+        hasMedicalCondition: userData.extraData?.hasMedicalCondition || "",
+        medicalConditions: userData.extraData?.medicalConditions?.replace(/_/g, " ") || "",
+        hasImplantedDevice: userData.extraData?.hasImplantedDevice || "",
+        implantedDevices: userData.extraData?.implantedDevices?.replace(/_/g, " ") || "",
+        takesMedication: userData.extraData?.takesMedication || "",
+        medicationList: userData.extraData?.medicationList || "",
+        hasHelthInsurance: userData.extraData?.hasHelthInsurance || "",
+        healthInsuranceProvider: userData.extraData?.healthInsuranceProvider || "",
+        medicalConsent: userData.extraData?.medicalConsent === 1,
         medicalConditionOtherDescription:
-          userData.medicalConditionOtherDescription || "",
+          userData.extraData?.medicalConditionOtherDescription || "",
       });
     }
   }, [userData]);
