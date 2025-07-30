@@ -186,8 +186,8 @@ export default function Login() {
 
       if (shouldShowFormMedicalRequest) {
         const cookies = parseCookies();
-        if (cookies.athlete_user_data) {
-          setUserData(JSON.parse(cookies.athlete_user_data));
+        if (cookies.athleteUserData) {
+          setUserData(JSON.parse(cookies.athleteUserData));
         }
       }
 
