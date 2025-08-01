@@ -100,6 +100,7 @@ export default function Login() {
 
   const handleAthleteSearch = async (forcedCpf) => {
     const targetCpf = forcedCpf || cpf;
+
     if (!targetCpf) {
       console.warn("CPF inválido ou ausente!");
       toast.error("CPF inválido ou ausente!");
@@ -243,13 +244,14 @@ export default function Login() {
           <Loading />
         ) : shouldShowFormMedicalRequest ? (
           <FormMedicalRequest
-            userData2={userData2}
             userData={userData}
             userUUID={USER_UUID || athletes[0]?.uuid}
             urlAPI={URL_API}
             eventId={eventId}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
+            athletes={athletes}
+            setAthletes={setAthletes}
           />
         ) : athletes.length > 1 ? (
           <ListAthletes athletes={athletes} />

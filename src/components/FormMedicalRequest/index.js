@@ -11,9 +11,10 @@ export default function FormMedicalRequest({
   eventId,
   userUUID,
   userData,
-  userData2,
   isLoading,
   setIsLoading,
+  athletes,
+  setAthletes,
 }) {
   const router = useRouter();
   const [formAlreadySubmitted, setFormAlreadySubmitted] = useState(false);
@@ -40,8 +41,6 @@ export default function FormMedicalRequest({
 
   const { t } = useContext(GlobalContext);
 
-  console.log(userData);
-
   const mapBloodTypeEnumToLabel = (value) => {
     const map = {
       O_POS: "O+",
@@ -58,28 +57,69 @@ export default function FormMedicalRequest({
   };
 
   useEffect(() => {
-    if (userData2?.extraData?.medicalConsent === 1) {
+    const fetchFullAthleteData = async () => {
+      if (
+        userData &&
+        userData?.document &&
+        userData?.birthDate &&
+        !userData?.extraData
+      ) {
+        const cleanCpf = userData?.document.replace(/\D/g, "");
+        const isoDate = new Date(userData.birthDate).toISOString().slice(0, 10);
+        const eventSlug = userData?.events?.slug;
+
+        try {
+          const res = await fetch(
+            `${urlAPI}resgistersAthlete/${eventSlug}/${cleanCpf}/${isoDate}`
+          );
+          if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data) && data.length > 0) {
+              setAthletes(data[0]);
+            } else {
+              toast.error("Atleta não encontrado.");
+            }
+          } else {
+            toast.error("Erro ao buscar dados do atleta.");
+          }
+        } catch (error) {
+          console.error(error);
+          toast.error("Erro de conexão com o servidor.");
+        }
+      }
+    };
+
+    fetchFullAthleteData();
+  }, [userData]);
+
+  useEffect(() => {
+    if (athletes?.extraData?.medicalConsent === 1) {
       setFormAlreadySubmitted(true);
       setFormData({
-        emergencyContactName: userData2.extraData?.emergencyContact?.split(" - ")[0] || "",
-        emergencyContactPhone: userData2.extraData?.emergencyContact?.split(" - ")[1] || "",
-        bloodType: mapBloodTypeEnumToLabel(userData2.extraData?.bloodType),
-        hasAllergy: userData2.extraData?.hasAllergy || "",
-        allergyDescription: userData2.extraData?.allergyDescription || "",
-        hasMedicalCondition: userData2.extraData?.hasMedicalCondition || "",
-        medicalConditions: userData2.extraData?.medicalConditions?.replace(/_/g, " ") || "",
-        hasImplantedDevice: userData2.extraData?.hasImplantedDevice || "",
-        implantedDevices: userData2.extraData?.implantedDevices?.replace(/_/g, " ") || "",
-        takesMedication: userData2.extraData?.takesMedication || "",
-        medicationList: userData2.extraData?.medicationList || "",
-        hasHelthInsurance: userData2.extraData?.hasHelthInsurance || "",
-        healthInsuranceProvider: userData2.extraData?.healthInsuranceProvider || "",
-        medicalConsent: userData2.extraData?.medicalConsent === 1,
+        emergencyContactName:
+          athletes.extraData?.emergencyContact?.split(" - ")[0] || "",
+        emergencyContactPhone:
+          athletes.extraData?.emergencyContact?.split(" - ")[1] || "",
+        bloodType: mapBloodTypeEnumToLabel(athletes.extraData?.bloodType),
+        hasAllergy: athletes.extraData?.hasAllergy || "",
+        allergyDescription: athletes.extraData?.allergyDescription || "",
+        hasMedicalCondition: athletes.extraData?.hasMedicalCondition || "",
+        medicalConditions:
+          athletes.extraData?.medicalConditions?.replace(/_/g, " ") || "",
+        hasImplantedDevice: athletes.extraData?.hasImplantedDevice || "",
+        implantedDevices:
+          athletes.extraData?.implantedDevices?.replace(/_/g, " ") || "",
+        takesMedication: athletes.extraData?.takesMedication || "",
+        medicationList: athletes.extraData?.medicationList || "",
+        hasHelthInsurance: athletes.extraData?.hasHelthInsurance || "",
+        healthInsuranceProvider:
+          athletes.extraData?.healthInsuranceProvider || "",
+        medicalConsent: athletes.extraData?.medicalConsent === 1,
         medicalConditionOtherDescription:
-          userData2.extraData?.medicalConditionOtherDescription || "",
+          athletes.extraData?.medicalConditionOtherDescription || "",
       });
     }
-  }, [userData2]);
+  }, [athletes]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -160,16 +200,16 @@ export default function FormMedicalRequest({
               <div className="userInfoText">
                 <div className="boxUserInfoText">
                   <p>{t("athlete")}</p>
-                  <h2>{userData?.name || userData2?.name}</h2>
+                  <h2>{userData?.name}</h2>
                 </div>
                 <div className="boxUserInfoText2">
                   <div className="subBoxUserInfoText">
                     <p>{t("bibNumber")}</p>
-                    <h2>{userData?.number || userData2?.number}</h2>
+                    <h2>{userData?.number}</h2>
                   </div>
                   <div className="subBoxUserInfoText">
                     <p>{t("modality")}</p>
-                    <h2>{userData?.modality || userData2?.modality}</h2>
+                    <h2>{userData?.modality}</h2>
                   </div>
                 </div>
               </div>
@@ -178,7 +218,7 @@ export default function FormMedicalRequest({
                   src={userData?.photo1Rekognition || "/images/User.png"}
                   alt="User"
                 /> */}
-                <img src={userData?.events.logo || userData2?.events.logo} alt="Logo Evento" />
+                <img src={userData?.events.logo} alt="Logo Evento" />
               </div>
             </div>
             {formAlreadySubmitted && !isEditing ? (
