@@ -11,6 +11,7 @@ export default function FormMedicalRequest({
   eventId,
   userUUID,
   userData,
+  userData2,
   isLoading,
   setIsLoading,
 }) {
@@ -39,6 +40,8 @@ export default function FormMedicalRequest({
 
   const { t } = useContext(GlobalContext);
 
+  console.log(userData);
+
   const mapBloodTypeEnumToLabel = (value) => {
     const map = {
       O_POS: "O+",
@@ -55,28 +58,28 @@ export default function FormMedicalRequest({
   };
 
   useEffect(() => {
-    if (userData?.extraData?.medicalConsent === 1) {
+    if (userData2?.extraData?.medicalConsent === 1) {
       setFormAlreadySubmitted(true);
       setFormData({
-        emergencyContactName: userData.extraData?.emergencyContact?.split(" - ")[0] || "",
-        emergencyContactPhone: userData.extraData?.emergencyContact?.split(" - ")[1] || "",
-        bloodType: mapBloodTypeEnumToLabel(userData.extraData?.bloodType),
-        hasAllergy: userData.extraData?.hasAllergy || "",
-        allergyDescription: userData.extraData?.allergyDescription || "",
-        hasMedicalCondition: userData.extraData?.hasMedicalCondition || "",
-        medicalConditions: userData.extraData?.medicalConditions?.replace(/_/g, " ") || "",
-        hasImplantedDevice: userData.extraData?.hasImplantedDevice || "",
-        implantedDevices: userData.extraData?.implantedDevices?.replace(/_/g, " ") || "",
-        takesMedication: userData.extraData?.takesMedication || "",
-        medicationList: userData.extraData?.medicationList || "",
-        hasHelthInsurance: userData.extraData?.hasHelthInsurance || "",
-        healthInsuranceProvider: userData.extraData?.healthInsuranceProvider || "",
-        medicalConsent: userData.extraData?.medicalConsent === 1,
+        emergencyContactName: userData2.extraData?.emergencyContact?.split(" - ")[0] || "",
+        emergencyContactPhone: userData2.extraData?.emergencyContact?.split(" - ")[1] || "",
+        bloodType: mapBloodTypeEnumToLabel(userData2.extraData?.bloodType),
+        hasAllergy: userData2.extraData?.hasAllergy || "",
+        allergyDescription: userData2.extraData?.allergyDescription || "",
+        hasMedicalCondition: userData2.extraData?.hasMedicalCondition || "",
+        medicalConditions: userData2.extraData?.medicalConditions?.replace(/_/g, " ") || "",
+        hasImplantedDevice: userData2.extraData?.hasImplantedDevice || "",
+        implantedDevices: userData2.extraData?.implantedDevices?.replace(/_/g, " ") || "",
+        takesMedication: userData2.extraData?.takesMedication || "",
+        medicationList: userData2.extraData?.medicationList || "",
+        hasHelthInsurance: userData2.extraData?.hasHelthInsurance || "",
+        healthInsuranceProvider: userData2.extraData?.healthInsuranceProvider || "",
+        medicalConsent: userData2.extraData?.medicalConsent === 1,
         medicalConditionOtherDescription:
-          userData.extraData?.medicalConditionOtherDescription || "",
+          userData2.extraData?.medicalConditionOtherDescription || "",
       });
     }
-  }, [userData]);
+  }, [userData2]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -157,16 +160,16 @@ export default function FormMedicalRequest({
               <div className="userInfoText">
                 <div className="boxUserInfoText">
                   <p>{t("athlete")}</p>
-                  <h2>{userData?.name}</h2>
+                  <h2>{userData?.name || userData2?.name}</h2>
                 </div>
                 <div className="boxUserInfoText2">
                   <div className="subBoxUserInfoText">
                     <p>{t("bibNumber")}</p>
-                    <h2>{userData?.number}</h2>
+                    <h2>{userData?.number || userData2?.number}</h2>
                   </div>
                   <div className="subBoxUserInfoText">
                     <p>{t("modality")}</p>
-                    <h2>{userData?.modality}</h2>
+                    <h2>{userData?.modality || userData2?.modality}</h2>
                   </div>
                 </div>
               </div>
@@ -175,7 +178,7 @@ export default function FormMedicalRequest({
                   src={userData?.photo1Rekognition || "/images/User.png"}
                   alt="User"
                 /> */}
-                <img src={userData?.events.logo} alt="Logo Evento" />
+                <img src={userData?.events.logo || userData2?.events.logo} alt="Logo Evento" />
               </div>
             </div>
             {formAlreadySubmitted && !isEditing ? (

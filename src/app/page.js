@@ -19,6 +19,7 @@ export default function Login() {
   const [image, setImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState();
+  const [userData2, setUserData2] = useState();
   const [eventData, setEventData] = useState();
   const [athletes, setAthletes] = useState([]);
   const [connectionError, setConnectionError] = useState(false);
@@ -34,29 +35,29 @@ export default function Login() {
 
   const shouldShowFormMedicalRequest = USER_UUID || athletes.length === 1;
 
-  // const getUserData = async () => {
-  //   setConnectionError(false);
-  //   setUserError(false);
+  const getUserData = async () => {
+    setConnectionError(false);
+    setUserError(false);
 
-  //   try {
-  //     const response = await fetch(`${URL_API}checkinCallChamber/${USER_UUID}`);
+    try {
+      const response = await fetch(`${URL_API}checkinCallChamber/${USER_UUID}`);
 
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       setUserData(data);
-  //       localStorage.setItem("user_name", data?.name);
-  //       localStorage.setItem("user_number", data?.number);
-  //       localStorage.setItem("event_name", data?.number);
-  //     } else if (response.status >= 500) {
-  //       setConnectionError(true);
-  //     } else {
-  //       setUserError(true);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //     setUserError(true);
-  //   }
-  // };
+      if (response.ok) {
+        const data = await response.json();
+        setUserData(data);
+        localStorage.setItem("user_name", data?.name);
+        localStorage.setItem("user_number", data?.number);
+        localStorage.setItem("event_name", data?.number);
+      } else if (response.status >= 500) {
+        setConnectionError(true);
+      } else {
+        setUserError(true);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setUserError(true);
+    }
+  };
 
   const handleCapture = (imageSrc) => {
     setModalCapture(true);
@@ -185,9 +186,11 @@ export default function Login() {
       if (shouldShowFormMedicalRequest) {
         const cookies = parseCookies();
         if (cookies.athleteUserData) {
-          setUserData(JSON.parse(cookies.athleteUserData));
+          setUserData2(JSON.parse(cookies.athleteUserData));
         }
       }
+
+      await getUserData();
 
       if (decodedCpf) {
         await handleAthleteSearch(decodedCpf);
@@ -240,6 +243,7 @@ export default function Login() {
           <Loading />
         ) : shouldShowFormMedicalRequest ? (
           <FormMedicalRequest
+            userData2={userData2}
             userData={userData}
             userUUID={USER_UUID || athletes[0]?.uuid}
             urlAPI={URL_API}
