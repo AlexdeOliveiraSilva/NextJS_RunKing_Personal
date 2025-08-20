@@ -11,9 +11,6 @@ import toast from "react-hot-toast";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
 
 export default function Login() {
-  const searchParams = useSearchParams();
-  const encodedCpf = searchParams.get("cpf");
-  const decodedCpf = encodedCpf ? atob(encodedCpf) : "";
   const router = useRouter();
 
   const [image, setImage] = useState("");
@@ -24,30 +21,52 @@ export default function Login() {
   const [athletes, setAthletes] = useState([]);
   const [connectionError, setConnectionError] = useState(false);
   const [userError, setUserError] = useState(false);
-  const [cpf, setCpf] = useState(decodedCpf);
+  const [cpf, setCpf] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [passport, setPassport] = useState("");
+  const [eventSlug, setEventSlug] = useState("");
+  const [userUuid, setUserUuid] = useState("");
 
-  const USER_UUID = searchParams.get("uuid");
-  const EVENT_SLUG = searchParams.get("event");
   const URL_API = "https://api.runking.com.br/";
   const eventId = userData?.events?.id;
 
-  const shouldShowFormMedicalRequest = USER_UUID || athletes.length === 1;
+  const shouldShowFormMedicalRequest = Boolean(
+    userUuid || (athletes && athletes.length === 1)
+  );
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    const eventSlugParam = params.get("event");
+    const userUuidParam = params.get("uuid");
+    const encodedCpfParam = params.get("cpf");
+
+    setEventSlug(eventSlugParam);
+    setUserUuid(userUuidParam);
+    if (encodedCpfParam) {
+      try {
+        setCpf(atob(encodedCpfParam));
+      } catch {
+        console.error("Erro ao decodificar CPF");
+      }
+    }
+  }, []);
 
   const getUserData = async () => {
+    if (!userUuid) return;
+
     setConnectionError(false);
     setUserError(false);
 
     try {
-      const response = await fetch(`${URL_API}checkinCallChamber/${USER_UUID}`);
+      const response = await fetch(`${URL_API}checkinCallChamber/${userUuid}`);
 
       if (response.ok) {
         const data = await response.json();
         setUserData(data);
         localStorage.setItem("user_name", data?.name);
         localStorage.setItem("user_number", data?.number);
-        localStorage.setItem("event_name", data?.number);
+        localStorage.setItem("event_name", data?.events?.name);
       } else if (response.status >= 500) {
         setConnectionError(true);
       } else {
@@ -59,33 +78,11 @@ export default function Login() {
     }
   };
 
-  const handleCapture = (imageSrc) => {
-    setModalCapture(true);
-    setCapturedImage(imageSrc);
-  };
-
-  const signOut = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      localStorage.clear("user_image");
-      setImage("");
-      setIsLoading(false);
-    }, 1000);
-  };
-
-  const closeAndSave = () => {
-    setTimeout(() => {
-      setImage(localStorage.getItem("user_image"));
-      setModalCapture(false);
-      setIsLoading(false);
-    }, 1000);
-  };
-
   const getEventData = async () => {
-    if (!EVENT_SLUG) return;
+    if (!eventSlug) return;
 
     try {
-      const response = await fetch(`${URL_API}eventBySlug/${EVENT_SLUG}`);
+      const response = await fetch(`${URL_API}eventBySlug/${eventSlug}`);
       if (response.ok) {
         const data = await response.json();
         setEventData(data);
@@ -99,6 +96,7 @@ export default function Login() {
   };
 
   const handleAthleteSearch = async (forcedCpf) => {
+    if (!eventSlug) return;
     const targetCpf = forcedCpf || cpf;
 
     if (!targetCpf) {
@@ -124,7 +122,7 @@ export default function Login() {
 
     try {
       const response = await fetch(
-        `${URL_API}resgistersAthlete/${EVENT_SLUG}/${cleanCpf}/${isoDate}`
+        `${URL_API}resgistersAthlete/${eventSlug}/${cleanCpf}/${isoDate}`
       );
 
       if (response.ok) {
@@ -141,13 +139,16 @@ export default function Login() {
 
         if (data.length > 1) {
           toast.success("Dados validados com successo!");
-          router.push(`?event=${EVENT_SLUG}&cpf=${encodedCpf}`);
+          router.push(`?event=${eventSlug}&cpf=${encodedCpf}`);
         } else if (data.length === 1) {
           toast.success("Dados validados com sucesso!");
           setCookie(null, "athleteUserData", JSON.stringify(data[0]), {
             maxAge: 60 * 60 * 24,
             path: "/",
           });
+
+          setUserUuid(data[0].uuid);
+
           router.push(`?uuid=${data[0].uuid}`);
         }
       } else {
@@ -182,7 +183,13 @@ export default function Login() {
       setIsLoading(true);
       setImage(localStorage.getItem("user_image"));
 
-      await getEventData();
+      if (eventSlug) {
+        await getEventData();
+      }
+
+      if (userUuid) {
+        await getUserData();
+      }
 
       if (shouldShowFormMedicalRequest) {
         const cookies = parseCookies();
@@ -191,61 +198,22 @@ export default function Login() {
         }
       }
 
-      await getUserData();
-
-      if (decodedCpf) {
-        await handleAthleteSearch(decodedCpf);
-      }
-
       setIsLoading(false);
     };
 
     fetchData();
-  }, [USER_UUID, athletes.length]);
+  }, [userUuid, eventSlug]);
 
   return (
     <main className="fullContainer">
-      {/* {modalCapture == true && (
-        <ModalTakePic
-          close={() => closeAndSave()}
-          uuid={USER_UUID}
-        ></ModalTakePic>
-      )} */}
       <Header title="Login" />
       <div className="homeContent">
-        {/* <div className="userContent">
-          <ProfileContent
-            status={!!connectionError ? 3 : !!userError ? 2 : 1}
-            name={!!userData?.name ? userData?.name : "-"}
-            number={!!userData?.number ? userData?.number : "-"}
-            auth={!!image ? 1 : 0}
-          ></ProfileContent>
-          <TakePicture
-            status={!!image ? true : false}
-            img={image}
-          ></TakePicture>
-        </div>
-        {!image ? (
-          <button
-            onClick={() => handleCapture()}
-            className="btnGreen profileBtn"
-          >
-            {isLoading == true ? <Loading></Loading> : "Tirar Foto"}
-          </button>
-        ) : (
-          <button
-            onClick={() => handleCapture()}
-            className="btnGreen profileBtn"
-          >
-            {isLoading == true ? <Loading></Loading> : "Reenviar Foto"}
-          </button>
-        )} */}
         {isLoading ? (
           <Loading />
         ) : shouldShowFormMedicalRequest ? (
           <FormMedicalRequest
             userData={userData}
-            userUUID={USER_UUID || athletes[0]?.uuid}
+            userUUID={userUuid || athletes[0]?.uuid}
             urlAPI={URL_API}
             eventId={eventId}
             isLoading={isLoading}
@@ -258,7 +226,7 @@ export default function Login() {
         ) : (
           <FormLogin
             eventData={eventData}
-            eventSlug={EVENT_SLUG}
+            eventSlug={eventSlug}
             urlAPI={URL_API}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
