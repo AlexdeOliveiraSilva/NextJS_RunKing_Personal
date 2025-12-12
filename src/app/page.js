@@ -36,6 +36,15 @@ export default function Login() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    const eventSlugParam = params.get("event");
+
+    if (eventSlugParam === "corrida-iluminada-de-natal-2025") {
+      window.location.href = "https://bit.ly/WA_MEDICO?r=qr";
+    }
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
 
     const eventSlugParam = params.get("event");
     const userUuidParam = params.get("uuid");
