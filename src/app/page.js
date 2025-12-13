@@ -12,6 +12,7 @@ import { setCookie, parseCookies, destroyCookie } from "nookies";
 
 export default function Login() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [image, setImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -35,20 +36,17 @@ export default function Login() {
   );
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const eventSlugParam = params.get("event");
+    const eventSlugParam = searchParams.get("event");
 
     if (eventSlugParam === "corrida-iluminada-de-natal-2025") {
-      window.location.href = "https://bit.ly/WA_MEDICO?r=qr";
+      window.location.replace("https://bit.ly/WA_MEDICO?r=qr");
     }
-  }, []);
+  }, [searchParams]);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-
-    const eventSlugParam = params.get("event");
-    const userUuidParam = params.get("uuid");
-    const encodedCpfParam = params.get("cpf");
+    const eventSlugParam = searchParams.get("event");
+    const userUuidParam = searchParams.get("uuid");
+    const encodedCpfParam = searchParams.get("cpf");
 
     setEventSlug(eventSlugParam);
     setUserUuid(userUuidParam);
@@ -59,7 +57,7 @@ export default function Login() {
         console.error("Erro ao decodificar CPF");
       }
     }
-  }, []);
+  }, [searchParams]);
 
   const getUserData = async () => {
     if (!userUuid) return;
