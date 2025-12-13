@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -10,7 +10,7 @@ import ListAthletes from "@/components/ListAthletes";
 import toast from "react-hot-toast";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
 
-export default function Login() {
+function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -247,5 +247,13 @@ export default function Login() {
       </div>
       <Footer />
     </main>
+  );
+}
+
+export default function Login() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <LoginContent />
+    </Suspense>
   );
 }
