@@ -44,9 +44,22 @@ function LoginContent() {
   }, [searchParams]);
 
   useEffect(() => {
-    const eventSlugParam = searchParams.get("event");
-    const userUuidParam = searchParams.get("uuid");
-    const encodedCpfParam = searchParams.get("cpf");
+    // Corrige URLs malformadas do RD Station (ex: ?event=slug?utm_source=...)
+    // O segundo "?" quebra o parsing dos searchParams
+    const rawUrl = window.location.href;
+    const firstQ = rawUrl.indexOf("?");
+    if (firstQ !== -1) {
+      const queryPart = rawUrl.substring(firstQ + 1);
+      const secondQ = queryPart.indexOf("?");
+      if (secondQ !== -1) {
+        const cleanUrl = rawUrl.substring(0, firstQ + 1) + queryPart.replace(/\?/g, "&");
+        window.history.replaceState({}, "", cleanUrl);
+      }
+    }
+
+    let eventSlugParam = new URLSearchParams(window.location.search).get("event");
+    const userUuidParam = new URLSearchParams(window.location.search).get("uuid");
+    const encodedCpfParam = new URLSearchParams(window.location.search).get("cpf");
 
     setEventSlug(eventSlugParam);
     setUserUuid(userUuidParam);
