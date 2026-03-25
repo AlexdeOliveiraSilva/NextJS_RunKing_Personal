@@ -1,12 +1,12 @@
 "use client";
 
-export default function Footer() {
+export default function Footer({ companySlug, eventSlug }) {
   const year = new Date().getFullYear();
 
   return (
     <div
       className="greyBackground"
-      style={{ height: "13vh", alignItems: "center" }}
+      style={{ height: "auto", alignItems: "center", padding: "20px 0" }}
     >
       <img width={150} src="/images/logo-runking.png"></img>
       <div className="boxTextSmall">

@@ -19,6 +19,7 @@ export default function FormMedicalRequest({
   const router = useRouter();
   const [formAlreadySubmitted, setFormAlreadySubmitted] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [isFillingAgain, setIsFillingAgain] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [formData, setFormData] = useState({
     emergencyContactName: "",
@@ -70,7 +71,7 @@ export default function FormMedicalRequest({
 
         try {
           const res = await fetch(
-            `${urlAPI}resgistersAthlete/${eventSlug}/${cleanCpf}/${isoDate}`
+            `${urlAPI}resgistersAthlete/${eventSlug}/${cleanCpf}/${isoDate}`,
           );
           if (res.ok) {
             const data = await res.json();
@@ -174,7 +175,7 @@ export default function FormMedicalRequest({
       if (!response.ok) {
         if (!response.ok) {
           throw new Error(
-            data.error || data.message || "Erro ao enviar os dados"
+            data.error || data.message || "Erro ao enviar os dados",
           );
         }
       }
@@ -224,14 +225,45 @@ export default function FormMedicalRequest({
             {formAlreadySubmitted && !isEditing ? (
               <div className="formAlreadySentMessage">
                 <h2>
-                  {t("formAlreadySent")}
-                  <br /> {t("goodLuck")}
+                  {t("formAlreadySentFor")}{" "}
+                  {userData?.events?.name || t("event")}
+                  {athletes?.extraData?.submittedAt &&
+                    ` ${t("onDate")} ${new Date(athletes.extraData.submittedAt).toLocaleDateString()}`}
+                  !
                 </h2>
+                <p
+                  style={{ fontSize: "1rem", marginTop: "8px", opacity: 0.85 }}
+                >
+                  {t("goodLuck")}
+                </p>
+                <p style={{ fontSize: "0.95rem", marginTop: "16px" }}>
+                  {t("fillAgainQuestion")}
+                </p>
                 <button
-                  onClick={() => setIsEditing(true)}
+                  onClick={() => {
+                    setIsFillingAgain(true);
+                    setIsEditing(true);
+                    setFormData({
+                      emergencyContactName: "",
+                      emergencyContactPhone: "",
+                      bloodType: "",
+                      hasAllergy: "",
+                      allergyDescription: "",
+                      hasMedicalCondition: "",
+                      medicalConditions: "",
+                      hasImplantedDevice: "",
+                      implantedDevices: "",
+                      takesMedication: "",
+                      medicationList: "",
+                      hasHelthInsurance: "",
+                      healthInsuranceProvider: "",
+                      medicalConsent: false,
+                      medicalConditionOtherDescription: "",
+                    });
+                  }}
                   className="editButton"
                 >
-                  {t("editInformation")}
+                  {t("fillAgain")}
                 </button>
               </div>
             ) : (
@@ -529,7 +561,10 @@ export default function FormMedicalRequest({
                   {isEditing && (
                     <button
                       type="button"
-                      onClick={() => setIsEditing(false)}
+                      onClick={() => {
+                        setIsEditing(false);
+                        setIsFillingAgain(false);
+                      }}
                       className="cancelEditButton"
                       style={{
                         backgroundColor: "#f44336",

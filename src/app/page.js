@@ -32,7 +32,7 @@ function LoginContent() {
   const eventId = userData?.events?.id;
 
   const shouldShowFormMedicalRequest = Boolean(
-    userUuid || (athletes && athletes.length === 1)
+    userUuid || (athletes && athletes.length === 1),
   );
 
   useEffect(() => {
@@ -52,14 +52,21 @@ function LoginContent() {
       const queryPart = rawUrl.substring(firstQ + 1);
       const secondQ = queryPart.indexOf("?");
       if (secondQ !== -1) {
-        const cleanUrl = rawUrl.substring(0, firstQ + 1) + queryPart.replace(/\?/g, "&");
+        const cleanUrl =
+          rawUrl.substring(0, firstQ + 1) + queryPart.replace(/\?/g, "&");
         window.history.replaceState({}, "", cleanUrl);
       }
     }
 
-    let eventSlugParam = new URLSearchParams(window.location.search).get("event");
-    const userUuidParam = new URLSearchParams(window.location.search).get("uuid");
-    const encodedCpfParam = new URLSearchParams(window.location.search).get("cpf");
+    let eventSlugParam = new URLSearchParams(window.location.search).get(
+      "event",
+    );
+    const userUuidParam = new URLSearchParams(window.location.search).get(
+      "uuid",
+    );
+    const encodedCpfParam = new URLSearchParams(window.location.search).get(
+      "cpf",
+    );
 
     setEventSlug(eventSlugParam);
     setUserUuid(userUuidParam);
@@ -142,7 +149,7 @@ function LoginContent() {
 
     try {
       const response = await fetch(
-        `${URL_API}resgistersAthlete/${eventSlug}/${cleanCpf}/${isoDate}`
+        `${URL_API}resgistersAthlete/${eventSlug}/${cleanCpf}/${isoDate}`,
       );
 
       if (response.ok) {
@@ -189,7 +196,7 @@ function LoginContent() {
       setUserError(true);
     } else if (response.status >= 500) {
       toast.error(
-        "Erro de conexão com o servidor. Tente novamente mais tarde."
+        "Erro de conexão com o servidor. Tente novamente mais tarde.",
       );
       setConnectionError(true);
     } else {
@@ -258,7 +265,10 @@ function LoginContent() {
           />
         )}
       </div>
-      <Footer />
+      <Footer
+            companySlug={eventData?.event?.companys?.slug}
+            eventSlug={eventSlug}
+          />
     </main>
   );
 }
