@@ -571,7 +571,7 @@ export default function FormMedicalRequest({
                         color: "#fff",
                       }}
                     >
-                      {t("cancelEdit")}
+                      {t("cancel")}
                     </button>
                   )}
                   <button
